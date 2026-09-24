@@ -1,0 +1,19 @@
+<template>
+    
+    <lightning-card title="Weather Forcasting">
+
+      
+             <div class="slds-m-around_medium">
+            <lightning-input type="text" label="Enter City " onchange={handleCityChange}></lightning-input>
+            </div>
+            <lightning-button label="Get Weather" onclick={getWeather}></lightning-button>
+        <div if:true={weatherIcon}>
+
+            <img src={weatherIcon} alt="Weather Icon" />
+            <strong>{weatherText}</strong>
+        </div>
+    </lightning-card>
+
+
+
+</template>
