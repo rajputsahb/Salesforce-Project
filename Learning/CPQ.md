@@ -1,43 +1,27 @@
 Salesforce CPQ – Learning Topics
-
-Below are detailed and professional descriptions written from a learning perspective, using "I learned" so you can directly add them to your README file for manager review.
-
-1. Multiple Currency
-
-I learned about Multiple Currency in Salesforce CPQ, which allows businesses to manage product pricing and sales transactions in different currencies based on customer and regional requirements. I understood how different currencies are enabled and configured in Salesforce, how currency conversion rates work, and how currency impacts Price Books, Quotes, and Quote Line Items. I also learned how Salesforce CPQ handles product pricing when creating quotes in different currencies.
-
-2. Pricing Method
-
-I learned about Pricing Methods in Salesforce CPQ, which define how the system calculates the price of a product when it is added to a Quote Line. I understood how different pricing methods are configured at the product level and how they affect the final selling price. I also explored how pricing methods help businesses manage product costs, standard prices, quantity-based pricing, and percentage-based pricing according to their business requirements.
-
-3. Types of Pricing Methods
-
-I learned about the different types of Pricing Methods available in Salesforce CPQ and understood how each method calculates product prices based on different business scenarios.
-
-List Price: Learned how the product price is determined using the standard price defined in the Price Book.
-
-Cost Price: Learned how product pricing is calculated based on the product's cost, which can be used to determine the selling price.
-
-Block Price: Learned how a fixed price is assigned to a predefined quantity range instead of calculating the price for each individual unit.
-
-Percent of Total (POT): Learned how the price of a product is calculated as a percentage of the total price of selected products or services in a quote.
-
-4. Block Price
-
-I learned about Block Pricing in Salesforce CPQ, where a fixed price is assigned to a specific quantity range rather than calculating the price based on individual product quantities. I understood how Block Price is configured using Block Price records and how different quantity ranges can have different fixed prices. For example, if a product is priced at $500 for a quantity range of 1–10 units, the customer pays $500 for any quantity within that range. I also learned how CPQ evaluates the applicable block based on the selected product quantity during quote calculation.
-
-5. Overage Rate in Block Price
-
-I learned about the Overage Rate functionality in Salesforce CPQ, which is used when the selected product quantity exceeds the defined block quantity range. I understood how the Overage Rate determines the additional price charged for quantities beyond the predefined block limit. For example, if a block price covers 1–10 units at $500 and the overage rate is $20 per additional unit, selecting 12 units results in an additional charge of $40. This helps businesses manage quantity-based pricing while maintaining flexibility for customers who require quantities beyond predefined blocks.
-
-6. Percentage of Total (POT)
-
-I learned about Percentage of Total pricing in Salesforce CPQ, which calculates the price of a product based on a specified percentage of the total value of selected products in a quote. I understood how the Percentage of Total field is configured at the product level and how the system calculates the price based on eligible Quote Lines. For example, if the selected products have a combined value of $10,000 and the POT percentage is 10%, the calculated price of the POT product will be $1,000. I also learned how POT is commonly used for additional services such as maintenance, support, warranties, and insurance.
-
-7. Twin Fields
-
-I learned about Twin Fields in Salesforce CPQ, which are corresponding fields with matching API names and compatible data types on related objects. These fields allow Salesforce CPQ to automatically transfer field values from one object to another during specific record creation processes. I understood how Twin Fields are used to copy information between Quote Line and Opportunity Product, and how they help maintain data consistency across related records. I also explored their importance in reducing manual data entry and supporting business requirements involving custom fields.
-
-8. Bundle Attribute
-
-I learned about Bundle Attributes in Salesforce CPQ, which allow users to capture additional information or make specific selections while configuring a product bundle. I understood how Bundle Attributes are created and associated with Product Features and Product Options to collect customer requirements during the product configuration process. I also learned how attributes can be used to control product selections, capture configuration details, and support different business scenarios. For example, while configuring a Laptop Bundle, an attribute can allow users to select RAM size, storage capacity, or operating system based on the available configuration options.
+Below are detailed and professional descriptions written from a learning perspective, suitable for adding directly to your README file for manager review.
+1. Global Attributes
+I learned about Global Attributes in Salesforce CPQ, which allow businesses to define reusable product configuration attributes that can be applied across multiple products and bundles. I understood how Global Attributes help maintain consistency in product configuration by avoiding the need to create the same attributes repeatedly for different products. I also explored how attributes are used to capture customer selections, define product dependencies, and control configuration behavior based on business requirements.
+2. Global Attribute Types – Dependency and Exclusive
+I learned about the different types of Global Attributes, particularly Dependency and Exclusive, and understood how they control product configuration behavior.
+- Dependency: Learned how Dependency attributes establish relationships between product attributes, where the selection of one attribute can influence or determine the available values of another attribute. For example, selecting a particular product category can restrict the available configuration options.
+- Exclusive: Learned how Exclusive attributes ensure that only one value or selection is allowed within a particular configuration context, preventing incompatible or conflicting selections during product configuration.
+I also understood how these attribute types help enforce business rules and maintain valid product configurations.
+3. Nested Bundles
+I learned about Nested Bundles in Salesforce CPQ, which allow businesses to create bundles within other bundles to support complex product structures. I understood how a parent bundle can contain multiple child bundles, each having its own Product Features, Product Options, and configuration rules. For example, a Laptop Bundle can contain a Software Bundle and an Accessories Bundle, with each child bundle offering its own configurable options. I also explored how nested bundles simplify complex product offerings and provide a structured approach to product configuration.
+4. Product Rules
+I learned about Product Rules in Salesforce CPQ, which are used to control and automate product configuration based on predefined business requirements. I understood how Product Rules help validate product selections, automatically select or filter product options, and display messages during bundle configuration. I also explored the main components of Product Rules, including Scope, Evaluation Event, Conditions, and Actions, and how they work together to control product behavior during the configuration process.
+5. Types of Product Rules
+I learned about the four main types of Product Rules available in Salesforce CPQ and understood their individual purposes and practical applications during product configuration.
+A. Validation Rule
+I learned how Validation Rules are used to prevent users from saving a product configuration when specific business conditions are not satisfied. These rules display an error message when an invalid product combination or selection is identified. For example, if a customer selects a product that requires a mandatory accessory, the Validation Rule can prevent saving until the required accessory is added.
+B. Selection Rule
+I learned how Selection Rules automatically add, remove, enable, or disable product options based on predefined business conditions. I understood how these rules help automate product selection and reduce manual configuration efforts. For example, selecting a Laptop Bundle can automatically add a predefined Antivirus Software option to the configuration.
+C. Alert Rule
+I learned how Alert Rules display informational or warning messages to users during product configuration without necessarily preventing them from proceeding. I understood how these rules help communicate important business information and guide users toward appropriate product selections. For example, when selecting a high-end product, an alert can inform the user about an additional warranty recommendation.
+D. Filter Rule
+I learned how Filter Rules restrict the available product options based on predefined conditions, ensuring that users can select only the relevant products during bundle configuration. I understood how Filter Rules improve the configuration experience by hiding irrelevant or incompatible options. For example, when selecting a particular laptop model, only compatible accessories can be displayed for selection.
+6. Summary Variables
+I learned about Summary Variables in Salesforce CPQ, which are used to summarize and calculate values from Quote Line records based on specified filters and aggregate functions. I understood how Summary Variables can perform calculations such as SUM, COUNT, MIN, and MAX on selected quote line fields. I also explored how they are used in Product Rules and Price Rules to evaluate business conditions. For example, a Summary Variable can calculate the total quantity of selected products and help enforce a business rule when the combined quantity exceeds a predefined limit.
+7. Custom Actions
+I learned about Custom Actions in Salesforce CPQ, which allow businesses to extend the standard product configuration experience by providing additional actions and navigation options. I understood how Custom Actions can be configured to launch custom pages, navigate to specific URLs, or execute supported actions based on business requirements. I also explored how Custom Actions can be used within the CPQ Quote Line Editor or Product Configuration experience to simplify user interactions and support customized business processes.
