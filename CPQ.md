@@ -1,27 +1,47 @@
-Salesforce CPQ – Learning Topics
+Salesforce Revenue Cloud – Learning Topics
 Below are detailed and professional descriptions written from a learning perspective, suitable for adding directly to your README file for manager review.
-1. Global Attributes
-I learned about Global Attributes in Salesforce CPQ, which allow businesses to define reusable product configuration attributes that can be applied across multiple products and bundles. I understood how Global Attributes help maintain consistency in product configuration by avoiding the need to create the same attributes repeatedly for different products. I also explored how attributes are used to capture customer selections, define product dependencies, and control configuration behavior based on business requirements.
-2. Global Attribute Types – Dependency and Exclusive
-I learned about the different types of Global Attributes, particularly Dependency and Exclusive, and understood how they control product configuration behavior.
-- Dependency: Learned how Dependency attributes establish relationships between product attributes, where the selection of one attribute can influence or determine the available values of another attribute. For example, selecting a particular product category can restrict the available configuration options.
-- Exclusive: Learned how Exclusive attributes ensure that only one value or selection is allowed within a particular configuration context, preventing incompatible or conflicting selections during product configuration.
-I also understood how these attribute types help enforce business rules and maintain valid product configurations.
-3. Nested Bundles
-I learned about Nested Bundles in Salesforce CPQ, which allow businesses to create bundles within other bundles to support complex product structures. I understood how a parent bundle can contain multiple child bundles, each having its own Product Features, Product Options, and configuration rules. For example, a Laptop Bundle can contain a Software Bundle and an Accessories Bundle, with each child bundle offering its own configurable options. I also explored how nested bundles simplify complex product offerings and provide a structured approach to product configuration.
-4. Product Rules
-I learned about Product Rules in Salesforce CPQ, which are used to control and automate product configuration based on predefined business requirements. I understood how Product Rules help validate product selections, automatically select or filter product options, and display messages during bundle configuration. I also explored the main components of Product Rules, including Scope, Evaluation Event, Conditions, and Actions, and how they work together to control product behavior during the configuration process.
-5. Types of Product Rules
-I learned about the four main types of Product Rules available in Salesforce CPQ and understood their individual purposes and practical applications during product configuration.
-A. Validation Rule
-I learned how Validation Rules are used to prevent users from saving a product configuration when specific business conditions are not satisfied. These rules display an error message when an invalid product combination or selection is identified. For example, if a customer selects a product that requires a mandatory accessory, the Validation Rule can prevent saving until the required accessory is added.
-B. Selection Rule
-I learned how Selection Rules automatically add, remove, enable, or disable product options based on predefined business conditions. I understood how these rules help automate product selection and reduce manual configuration efforts. For example, selecting a Laptop Bundle can automatically add a predefined Antivirus Software option to the configuration.
-C. Alert Rule
-I learned how Alert Rules display informational or warning messages to users during product configuration without necessarily preventing them from proceeding. I understood how these rules help communicate important business information and guide users toward appropriate product selections. For example, when selecting a high-end product, an alert can inform the user about an additional warranty recommendation.
-D. Filter Rule
-I learned how Filter Rules restrict the available product options based on predefined conditions, ensuring that users can select only the relevant products during bundle configuration. I understood how Filter Rules improve the configuration experience by hiding irrelevant or incompatible options. For example, when selecting a particular laptop model, only compatible accessories can be displayed for selection.
-6. Summary Variables
-I learned about Summary Variables in Salesforce CPQ, which are used to summarize and calculate values from Quote Line records based on specified filters and aggregate functions. I understood how Summary Variables can perform calculations such as SUM, COUNT, MIN, and MAX on selected quote line fields. I also explored how they are used in Product Rules and Price Rules to evaluate business conditions. For example, a Summary Variable can calculate the total quantity of selected products and help enforce a business rule when the combined quantity exceeds a predefined limit.
-7. Custom Actions
-I learned about Custom Actions in Salesforce CPQ, which allow businesses to extend the standard product configuration experience by providing additional actions and navigation options. I understood how Custom Actions can be configured to launch custom pages, navigate to specific URLs, or execute supported actions based on business requirements. I also explored how Custom Actions can be used within the CPQ Quote Line Editor or Product Configuration experience to simplify user interactions and support customized business processes.
+
+### 1. Revenue Cloud
+
+I learned about Salesforce Revenue Cloud, which provides an end-to-end solution for managing the revenue lifecycle, starting from product and catalog management through quoting, ordering, contracting, billing, and revenue-related processes. I understood how Revenue Cloud connects different stages of the Quote-to-Cash (Q2C) process and helps organizations manage complex products, pricing, subscriptions, orders, and customer agreements. I also learned how Revenue Cloud supports flexible product models and different selling approaches such as one-time, subscription, usage-based, and percentage-based offerings.
+
+### 2. Types of Products
+
+I learned about different product models used in Salesforce Revenue Cloud and understood how each product type supports different business and selling requirements.
+
+### A. One-Time Product
+I learned about One-Time Products, which are products or services sold as a single transaction without an ongoing subscription period. Once the customer purchases the product, the charge is generally made as a one-time amount. For example, purchasing a laptop for $1,000 is a one-time product sale.
+
+### B. Evergreen Product
+I learned about Evergreen Products, which represent subscription products that continue indefinitely until the customer or business terminates the subscription. Unlike a fixed-term subscription, an evergreen subscription does not have a predefined end date. For example, a monthly software subscription that continues until the customer cancels it can be modeled as an evergreen product.
+
+### C. Term-Defined Product
+I learned about Term-Defined Products, where the subscription has a predefined start date and end date or subscription duration. I understood how the product remains active for the specified term and how pricing can be calculated based on that subscription period. For example, a software license purchased for 12 months or 36 months can be represented as a term-defined subscription.
+
+### 3. Usage-Based Product
+
+I learned about Usage-Based Products, where customers are charged according to their actual consumption or usage rather than paying only a fixed amount. I understood how usage-based pricing is useful for services where consumption can vary from customer to customer. For example, a cloud service may charge based on the number of API calls, storage consumed, or data processed during a billing period.
+
+### 4. Percentage of Total (POT)
+
+I learned about Percentage of Total (POT) pricing, where the price of one product is calculated as a percentage of the value of other eligible products or services included in the transaction. I understood how this pricing model is useful for additional services such as maintenance, support, insurance, or service fees. For example, if eligible products have a total value of $10,000 and the POT product is configured at 10%, the calculated charge would be $1,000.
+
+### 5. MDQ – Multi-Dimensional Quoting
+
+I learned about Multi-Dimensional Quoting (MDQ), which allows a subscription product to be divided into multiple time-based segments or dimensions for pricing and quantity management. I understood how each segment can have different quantities, discounts, or pricing depending on the business requirement. For example, a three-year subscription can be divided into three yearly segments, allowing the price or quantity to change independently for each year.
+
+### 6. Product Selling Model
+
+I learned about the Product Selling Model, which defines how a product is offered and sold to customers. I understood how the selling model helps determine whether a product is sold as a one-time purchase, subscription, usage-based offering, or another supported commercial model. This helps businesses represent different revenue models within the product catalog and ensures that the product behaves correctly during the quoting and ordering process.
+
+### 7. Product Catalog
+
+I learned about the Product Catalog in Salesforce Revenue Cloud, which provides a centralized structure for organizing and managing products that are available for sale. I understood how the catalog acts as a foundation for product discovery and helps sales users find the appropriate products during the selling process. I also learned how product information such as product details, categories, pricing, attributes, and relationships can be organized to support an efficient selling experience.
+
+### 8. Product Categories
+
+I learned about Product Categories, which are used to organize products into logical groups within the product catalog. I understood how categorization makes it easier for users to search, browse, and identify products based on business or product characteristics. For example, a catalog could contain categories such as Laptops, Accessories, Software, and Services, with relevant products organized under each category.
+
+### 9. Product Discovery Settings
+
+I learned about Product Discovery Settings, which control how products are made available and discovered during the product selection process. I understood how these settings help determine how users search for and view products within the catalog and how product information can be presented based on the configured discovery experience. I also explored how proper discovery configuration improves the user experience by helping sales users quickly find relevant products instead of manually searching through the complete product catalog.
