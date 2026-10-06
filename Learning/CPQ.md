@@ -1,47 +1,29 @@
-Salesforce Revenue Cloud – Learning Topics
+### Salesforce Revenue Cloud – Learning Topics
+
 Below are detailed and professional descriptions written from a learning perspective, suitable for adding directly to your README file for manager review.
 
-### 1. Revenue Cloud
+### 1. Dynamic Product Attribute
 
-I learned about Salesforce Revenue Cloud, which provides an end-to-end solution for managing the revenue lifecycle, starting from product and catalog management through quoting, ordering, contracting, billing, and revenue-related processes. I understood how Revenue Cloud connects different stages of the Quote-to-Cash (Q2C) process and helps organizations manage complex products, pricing, subscriptions, orders, and customer agreements. I also learned how Revenue Cloud supports flexible product models and different selling approaches such as one-time, subscription, usage-based, and percentage-based offerings.
+I learned about Dynamic Product Attributes in Salesforce Revenue Cloud, which allow product configuration information to be captured dynamically based on the selected product and configuration requirements. I understood how dynamic attributes can provide different values or configuration options depending on the product context. I also explored how they help create flexible product configurations without requiring every possible combination to be created as a separate product.
 
-### 2. Types of Products
+### 2. Attribute Picklists
 
-I learned about different product models used in Salesforce Revenue Cloud and understood how each product type supports different business and selling requirements.
+I learned about Attribute Picklists, which provide predefined selectable values for a product attribute. I understood how picklists make product configuration easier by allowing users to select a value from a controlled list instead of entering information manually. For example, for a Color attribute, the available values can be Black, White, Blue, and Silver. I also learned how attribute picklists help maintain consistent configuration data and prevent invalid values from being entered.
 
-### A. One-Time Product
-I learned about One-Time Products, which are products or services sold as a single transaction without an ongoing subscription period. Once the customer purchases the product, the charge is generally made as a one-time amount. For example, purchasing a laptop for $1,000 is a one-time product sale.
+### 3. Attribute Definition
 
-### B. Evergreen Product
-I learned about Evergreen Products, which represent subscription products that continue indefinitely until the customer or business terminates the subscription. Unlike a fixed-term subscription, an evergreen subscription does not have a predefined end date. For example, a monthly software subscription that continues until the customer cancels it can be modeled as an evergreen product.
+I learned about Attribute Definitions, which define the characteristics or properties that can be associated with products in Salesforce Revenue Cloud. I understood how an attribute definition specifies important information such as the attribute name, data type, available values, and other configuration properties. For example, attributes such as Color, RAM, Storage, Size, and Warranty can be defined and then used while configuring products. I also learned how reusable attribute definitions help maintain consistency across multiple products.
 
-### C. Term-Defined Product
-I learned about Term-Defined Products, where the subscription has a predefined start date and end date or subscription duration. I understood how the product remains active for the specified term and how pricing can be calculated based on that subscription period. For example, a software license purchased for 12 months or 36 months can be represented as a term-defined subscription.
+### 4. Attribute Categories
 
-### 3. Usage-Based Product
+I learned about Attribute Categories, which are used to logically group related product attributes to make product configuration and attribute management more organized. I understood how multiple related attributes can be grouped under a category based on their business purpose. For example, a Hardware category can contain attributes such as RAM, Processor, Storage, and Screen Size, while a Warranty category can contain Warranty Type and Warranty Duration. This helps provide a structured and user-friendly configuration experience.
 
-I learned about Usage-Based Products, where customers are charged according to their actual consumption or usage rather than paying only a fixed amount. I understood how usage-based pricing is useful for services where consumption can vary from customer to customer. For example, a cloud service may charge based on the number of API calls, storage consumed, or data processed during a billing period.
+### 5. Product Classification
 
-### 4. Percentage of Total (POT)
+I learned about Product Classification in Salesforce Revenue Cloud, which is used to organize and classify products based on their characteristics, business purpose, or product hierarchy. I understood how classification helps identify which attributes and configuration information are relevant to a particular type of product. For example, products classified as Laptops may require attributes such as RAM, Processor, and Storage, while products classified as Mobile Phones may require attributes such as Screen Size, Storage, and Camera. I also learned how product classification supports standardized product management and improves the overall product configuration experience.
 
-I learned about Percentage of Total (POT) pricing, where the price of one product is calculated as a percentage of the value of other eligible products or services included in the transaction. I understood how this pricing model is useful for additional services such as maintenance, support, insurance, or service fees. For example, if eligible products have a total value of $10,000 and the POT product is configured at 10%, the calculated charge would be $1,000.
+### 6. Configuration Rule
 
-### 5. MDQ – Multi-Dimensional Quoting
+I learned about Configuration Rules in Salesforce Revenue Cloud, which are used to control product configuration behavior and ensure that users select valid and compatible product options. I understood how configuration rules can define relationships and conditions between products, attributes, and configuration choices. For example, if a customer selects Black Color for an iPhone bundle, a configuration rule can ensure that only compatible RAM options such as 8 GB and 4 GB are available while an incompatible option such as 12 GB is restricted.
 
-I learned about Multi-Dimensional Quoting (MDQ), which allows a subscription product to be divided into multiple time-based segments or dimensions for pricing and quantity management. I understood how each segment can have different quantities, discounts, or pricing depending on the business requirement. For example, a three-year subscription can be divided into three yearly segments, allowing the price or quantity to change independently for each year.
-
-### 6. Product Selling Model
-
-I learned about the Product Selling Model, which defines how a product is offered and sold to customers. I understood how the selling model helps determine whether a product is sold as a one-time purchase, subscription, usage-based offering, or another supported commercial model. This helps businesses represent different revenue models within the product catalog and ensures that the product behaves correctly during the quoting and ordering process.
-
-### 7. Product Catalog
-
-I learned about the Product Catalog in Salesforce Revenue Cloud, which provides a centralized structure for organizing and managing products that are available for sale. I understood how the catalog acts as a foundation for product discovery and helps sales users find the appropriate products during the selling process. I also learned how product information such as product details, categories, pricing, attributes, and relationships can be organized to support an efficient selling experience.
-
-### 8. Product Categories
-
-I learned about Product Categories, which are used to organize products into logical groups within the product catalog. I understood how categorization makes it easier for users to search, browse, and identify products based on business or product characteristics. For example, a catalog could contain categories such as Laptops, Accessories, Software, and Services, with relevant products organized under each category.
-
-### 9. Product Discovery Settings
-
-I learned about Product Discovery Settings, which control how products are made available and discovered during the product selection process. I understood how these settings help determine how users search for and view products within the catalog and how product information can be presented based on the configured discovery experience. I also explored how proper discovery configuration improves the user experience by helping sales users quickly find relevant products instead of manually searching through the complete product catalog.
+I also learned how configuration rules help automate business logic during product configuration, reduce invalid combinations, improve the user experience, and ensure that the final product configuration follows predefined business requirements.
