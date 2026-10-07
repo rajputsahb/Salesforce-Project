@@ -2,28 +2,37 @@
 
 Below are detailed and professional descriptions written from a learning perspective, suitable for adding directly to your README file for manager review.
 
-### 1. Dynamic Product Attribute
+### 1. Context Definition
 
-I learned about Dynamic Product Attributes in Salesforce Revenue Cloud, which allow product configuration information to be captured dynamically based on the selected product and configuration requirements. I understood how dynamic attributes can provide different values or configuration options depending on the product context. I also explored how they help create flexible product configurations without requiring every possible combination to be created as a separate product.
+I learned about Context Definitions in Salesforce Revenue Cloud, which are used to define and organize the business data and information required during a particular process, such as pricing, qualification, or product configuration. I understood how a Context Definition determines what information is available to a specific business process and provides a structured way to pass relevant data between different Revenue Cloud components. I also learned that context helps Revenue Cloud evaluate business logic using information such as product, customer, transaction, quantity, and other relevant attributes.
 
-### 2. Attribute Picklists
+### 2. Decision Table
 
-I learned about Attribute Picklists, which provide predefined selectable values for a product attribute. I understood how picklists make product configuration easier by allowing users to select a value from a controlled list instead of entering information manually. For example, for a Color attribute, the available values can be Black, White, Blue, and Silver. I also learned how attribute picklists help maintain consistent configuration data and prevent invalid values from being entered.
+I learned about Decision Tables in Salesforce Revenue Cloud, which are used to represent business rules and decisions in a structured table format. I understood how input conditions can be matched against predefined rows to determine the appropriate output or business decision. For example, a Decision Table can determine a discount based on Product Type, Customer Segment, and Quantity.
+I also learned that Decision Tables help move business logic away from hardcoded logic and make rules easier to maintain and update when business requirements change.
 
-### 3. Attribute Definition
+### 3. Context Definition Layers
 
-I learned about Attribute Definitions, which define the characteristics or properties that can be associated with products in Salesforce Revenue Cloud. I understood how an attribute definition specifies important information such as the attribute name, data type, available values, and other configuration properties. For example, attributes such as Color, RAM, Storage, Size, and Warranty can be defined and then used while configuring products. I also learned how reusable attribute definitions help maintain consistency across multiple products.
+I learned about the Layers of Context Definitions and how different levels of business information can be organized and made available to Revenue Cloud processes. I understood that context can be structured so that the required information is available at the appropriate level for processes such as pricing, qualification, and product configuration.
+I also learned how separating context into logical layers helps organize data, improves reusability, and allows different business processes to consume only the information they require.
 
-### 4. Attribute Categories
+### 4. Why Revenue Cloud Uses Decoupled Architecture
 
-I learned about Attribute Categories, which are used to logically group related product attributes to make product configuration and attribute management more organized. I understood how multiple related attributes can be grouped under a category based on their business purpose. For example, a Hardware category can contain attributes such as RAM, Processor, Storage, and Screen Size, while a Warranty category can contain Warranty Type and Warranty Duration. This helps provide a structured and user-friendly configuration experience.
+I learned why Salesforce Revenue Cloud uses a decoupled architecture, where different business capabilities such as product catalog, pricing, configuration, quoting, ordering, and billing can operate as separate but connected services or components.
+I understood that this architecture provides greater flexibility, scalability, reusability, and maintainability. Pricing logic, for example, can be changed without requiring major changes to other parts of the selling process. I also learned that decoupling allows organizations to integrate Revenue Cloud with external systems and reuse business capabilities across different channels and applications.
 
-### 5. Product Classification
+### 5. Pricing Procedures
 
-I learned about Product Classification in Salesforce Revenue Cloud, which is used to organize and classify products based on their characteristics, business purpose, or product hierarchy. I understood how classification helps identify which attributes and configuration information are relevant to a particular type of product. For example, products classified as Laptops may require attributes such as RAM, Processor, and Storage, while products classified as Mobile Phones may require attributes such as Screen Size, Storage, and Camera. I also learned how product classification supports standardized product management and improves the overall product configuration experience.
+I learned about Pricing Procedures in Salesforce Revenue Cloud, which are used to define and execute the sequence of steps required to calculate the price of a product or transaction. I understood how pricing procedures can process information such as base price, discounts, adjustments, taxes, and other pricing factors to determine the final price.
+I also learned that pricing procedures provide a structured and configurable approach to pricing logic, allowing businesses to support complex pricing scenarios without relying entirely on custom code.
 
-### 6. Configuration Rule
+### 6. Mapping Intent
 
-I learned about Configuration Rules in Salesforce Revenue Cloud, which are used to control product configuration behavior and ensure that users select valid and compatible product options. I understood how configuration rules can define relationships and conditions between products, attributes, and configuration choices. For example, if a customer selects Black Color for an iPhone bundle, a configuration rule can ensure that only compatible RAM options such as 8 GB and 4 GB are available while an incompatible option such as 12 GB is restricted.
+I learned about Mapping Intent in Salesforce Revenue Cloud, which helps identify the purpose or business context of the information being processed and maps the required data to the appropriate Revenue Cloud process. I understood how mapping ensures that the correct data is available in the expected structure for operations such as pricing, qualification, configuration, and other business processes.
+I also learned that proper mapping helps different Revenue Cloud components understand and consume data consistently, which is important when multiple services or processes work together.
 
-I also learned how configuration rules help automate business logic during product configuration, reduce invalid combinations, improve the user experience, and ensure that the final product configuration follows predefined business requirements.
+### 7. Qualification Rule
+
+I learned about Qualification Rules in Salesforce Revenue Cloud, which are used to determine whether a product, offer, customer, or transaction meets specific business conditions or eligibility criteria. I understood how qualification rules evaluate information from the available business context and determine whether a particular condition is satisfied.
+For example, a business may define a rule that a Premium Support Plan can only be offered to customers who have purchased an eligible product. The Qualification Rule evaluates the relevant customer and product information and determines whether the customer qualifies for the offer.
+I also learned how Qualification Rules can help businesses automate eligibility decisions, prevent invalid offerings, and provide a more controlled product-selling experience.
