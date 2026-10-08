@@ -1,38 +1,37 @@
-### Salesforce Revenue Cloud – Learning Topics
+### Salesforce CPQ & Revenue Cloud – Learning Topics
 
-Below are detailed and professional descriptions written from a learning perspective, suitable for adding directly to your README file for manager review.
+### 1. Adding Product Images in Salesforce CPQ
 
-### 1. Context Definition
+I learned how to display product images in Salesforce CPQ so that users can visually identify products while working with the product catalog or Quote Line Editor. I understood how product images can improve the product selection experience, especially when there are multiple similar products.
+As part of the implementation, I first created a Static Resource in Salesforce to store the product image. After that, I created two custom fields on the Product object:
+- Text Field: Used to store the image reference or image path.
+- Formula Field: Used to construct the image URL and display the image using the Salesforce IMAGE() formula function.
+I also learned how to add the required Product field to the appropriate Field Set so that the image-related information can be displayed in the CPQ interface. I tested the configuration by associating an image with a product and verifying that the image was displayed correctly.
+For example, an image formula can use the following approach:
+IMAGE(Product_Image_Link__c, "Product Image", 32, 32)
+I understood that the IMAGE() function takes the image URL/reference, alternative text, image height, and image width and renders the image in Salesforce.
 
-I learned about Context Definitions in Salesforce Revenue Cloud, which are used to define and organize the business data and information required during a particular process, such as pricing, qualification, or product configuration. I understood how a Context Definition determines what information is available to a specific business process and provides a structured way to pass relevant data between different Revenue Cloud components. I also learned that context helps Revenue Cloud evaluate business logic using information such as product, customer, transaction, quantity, and other relevant attributes.
+### 2. Product Image Configuration in Revenue Cloud
 
-### 2. Decision Table
+I also explored how product images can be configured and displayed in Salesforce Revenue Cloud. I compared the approach used in Salesforce CPQ with the Revenue Cloud product catalog experience and investigated how product information and visual assets can be associated with products.
+I learned that Revenue Cloud provides a more catalog-oriented product experience where product information, attributes, categories, and other product metadata can be presented together to support product discovery and selling. I also explored how product images can improve the product discovery experience by helping users visually identify the correct product.
 
-I learned about Decision Tables in Salesforce Revenue Cloud, which are used to represent business rules and decisions in a structured table format. I understood how input conditions can be matched against predefined rows to determine the appropriate output or business decision. For example, a Decision Table can determine a discount based on Product Type, Customer Segment, and Quantity.
-I also learned that Decision Tables help move business logic away from hardcoded logic and make rules easier to maintain and update when business requirements change.
+### 3. Usage-Based Product in Revenue Cloud
 
-### 3. Context Definition Layers
+I learned about Usage-Based Products in Salesforce Revenue Cloud, where customers are charged based on their actual consumption or usage instead of only a fixed product quantity or subscription term. I understood how usage-based products are useful for businesses where customer consumption can change over time, such as cloud services, API usage, storage, telecommunications, or transaction-based services.
+I also studied different usage-based product models and how they can be configured based on the business requirement.
 
-I learned about the Layers of Context Definitions and how different levels of business information can be organized and made available to Revenue Cloud processes. I understood that context can be structured so that the required information is available at the appropriate level for processes such as pricing, qualification, and product configuration.
-I also learned how separating context into logical layers helps organize data, improves reusability, and allows different business processes to consume only the information they require.
+### A. Anchor-Based Usage
 
-### 4. Why Revenue Cloud Uses Decoupled Architecture
+I learned about Anchor-Based Usage, where usage charges are associated with an anchor or base product, subscription, or entitlement. The anchor provides the reference point for determining which usage belongs to a particular customer or subscription.
+For example, if a customer purchases a cloud platform subscription as the base product, the API calls or storage consumption associated with that subscription can be tracked and charged as usage.
 
-I learned why Salesforce Revenue Cloud uses a decoupled architecture, where different business capabilities such as product catalog, pricing, configuration, quoting, ordering, and billing can operate as separate but connected services or components.
-I understood that this architecture provides greater flexibility, scalability, reusability, and maintainability. Pricing logic, for example, can be changed without requiring major changes to other parts of the selling process. I also learned that decoupling allows organizations to integrate Revenue Cloud with external systems and reuse business capabilities across different channels and applications.
+### B. Pack-Based Usage
 
-### 5. Pricing Procedures
+I learned about Pack-Based Usage, where usage is sold in predefined packs or units instead of charging for every individual usage event. I understood how customers can purchase a specific number of usage units and consume them over a defined period.
+For example, a customer may purchase a pack of 10,000 API calls. The customer can consume those calls, and the pricing is based on the purchased or consumed pack according to the configured business rules.
 
-I learned about Pricing Procedures in Salesforce Revenue Cloud, which are used to define and execute the sequence of steps required to calculate the price of a product or transaction. I understood how pricing procedures can process information such as base price, discounts, adjustments, taxes, and other pricing factors to determine the final price.
-I also learned that pricing procedures provide a structured and configurable approach to pricing logic, allowing businesses to support complex pricing scenarios without relying entirely on custom code.
+### C. Other Usage-Based Models
 
-### 6. Mapping Intent
-
-I learned about Mapping Intent in Salesforce Revenue Cloud, which helps identify the purpose or business context of the information being processed and maps the required data to the appropriate Revenue Cloud process. I understood how mapping ensures that the correct data is available in the expected structure for operations such as pricing, qualification, configuration, and other business processes.
-I also learned that proper mapping helps different Revenue Cloud components understand and consume data consistently, which is important when multiple services or processes work together.
-
-### 7. Qualification Rule
-
-I learned about Qualification Rules in Salesforce Revenue Cloud, which are used to determine whether a product, offer, customer, or transaction meets specific business conditions or eligibility criteria. I understood how qualification rules evaluate information from the available business context and determine whether a particular condition is satisfied.
-For example, a business may define a rule that a Premium Support Plan can only be offered to customers who have purchased an eligible product. The Qualification Rule evaluates the relevant customer and product information and determines whether the customer qualifies for the offer.
-I also learned how Qualification Rules can help businesses automate eligibility decisions, prevent invalid offerings, and provide a more controlled product-selling experience.
+I also explored how Revenue Cloud can support different consumption-based pricing scenarios depending on the business requirement. The pricing can be based on metrics such as quantity consumed, transactions, API calls, storage, data volume, or service usage.
+I learned that configuring a usage-based product requires understanding the product selling model, usage metric, pricing logic, and relationship between the usage record and the customer's product or subscription.
