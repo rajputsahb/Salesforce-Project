@@ -1,37 +1,34 @@
-### Salesforce CPQ & Revenue Cloud – Learning Topics
+### Salesforce Revenue Cloud & CPQ – Product Configuration Business Logic
 
-### 1. Adding Product Images in Salesforce CPQ
+### 1. Implementing Dynamic Product Attribute Logic
 
-I learned how to display product images in Salesforce CPQ so that users can visually identify products while working with the product catalog or Quote Line Editor. I understood how product images can improve the product selection experience, especially when there are multiple similar products.
-As part of the implementation, I first created a Static Resource in Salesforce to store the product image. After that, I created two custom fields on the Product object:
-- Text Field: Used to store the image reference or image path.
-- Formula Field: Used to construct the image URL and display the image using the Salesforce IMAGE() formula function.
-I also learned how to add the required Product field to the appropriate Field Set so that the image-related information can be displayed in the CPQ interface. I tested the configuration by associating an image with a product and verifying that the image was displayed correctly.
-For example, an image formula can use the following approach:
-IMAGE(Product_Image_Link__c, "Product Image", 32, 32)
-I understood that the IMAGE() function takes the image URL/reference, alternative text, image height, and image width and renders the image in Salesforce.
+I implemented a business scenario in Salesforce Revenue Cloud and applied the same configuration logic in Salesforce CPQ to control product attributes dynamically based on user selections. The objective was to configure an iPhone product with RAM and Color attributes and ensure that the available RAM options change according to the selected color.
 
-### 2. Product Image Configuration in Revenue Cloud
+### Business Requirement
 
-I also explored how product images can be configured and displayed in Salesforce Revenue Cloud. I compared the approach used in Salesforce CPQ with the Revenue Cloud product catalog experience and investigated how product information and visual assets can be associated with products.
-I learned that Revenue Cloud provides a more catalog-oriented product experience where product information, attributes, categories, and other product metadata can be presented together to support product discovery and selling. I also explored how product images can improve the product discovery experience by helping users visually identify the correct product.
+The iPhone product has the following configuration attributes:
+- RAM: 4 GB, 8 GB, 12 GB
+- Color: Black, White, Yellow
 
-### 3. Usage-Based Product in Revenue Cloud
+## I implemented the following business logic:
 
-I learned about Usage-Based Products in Salesforce Revenue Cloud, where customers are charged based on their actual consumption or usage instead of only a fixed product quantity or subscription term. I understood how usage-based products are useful for businesses where customer consumption can change over time, such as cloud services, API usage, storage, telecommunications, or transaction-based services.
-I also studied different usage-based product models and how they can be configured based on the business requirement.
+- When the user selects Black, only 4 GB and 8 GB RAM options are available, 12 GB is hidden or disabled, and 8 GB RAM is automatically selected.
+- When the user selects White or Yellow, all three RAM options (4 GB, 8 GB, and 12 GB) are available, and no RAM option is automatically selected.
 
-### A. Anchor-Based Usage
+### Implementation in Salesforce Revenue Cloud
 
-I learned about Anchor-Based Usage, where usage charges are associated with an anchor or base product, subscription, or entitlement. The anchor provides the reference point for determining which usage belongs to a particular customer or subscription.
-For example, if a customer purchases a cloud platform subscription as the base product, the API calls or storage consumption associated with that subscription can be tracked and charged as usage.
+I worked on configuring product attributes and business rules to control the available RAM options based on the selected color. I explored how attribute definitions, attribute picklists, and configuration rules can be used to manage product configuration behavior and enforce the required business conditions.
 
-### B. Pack-Based Usage
+### Implementation in Salesforce CPQ
 
-I learned about Pack-Based Usage, where usage is sold in predefined packs or units instead of charging for every individual usage event. I understood how customers can purchase a specific number of usage units and consume them over a defined period.
-For example, a customer may purchase a pack of 10,000 API calls. The customer can consume those calls, and the pricing is based on the purchased or consumed pack according to the configured business rules.
+I applied the same business logic in Salesforce CPQ to dynamically control the available RAM options based on the selected iPhone color. I worked on configuring the required product attributes and Product Rules to restrict incompatible selections and automatically select the appropriate RAM option when Black is chosen.
 
-### C. Other Usage-Based Models
+### Expected Result
 
-I also explored how Revenue Cloud can support different consumption-based pricing scenarios depending on the business requirement. The pricing can be based on metrics such as quantity consumed, transactions, API calls, storage, data volume, or service usage.
-I learned that configuring a usage-based product requires understanding the product selling model, usage metric, pricing logic, and relationship between the usage record and the customer's product or subscription.
+Selected Color	Available RAM	Default RAM
+Black	4 GB, 8 GB	8 GB
+White	4 GB, 8 GB, 12 GB	None
+Yellow	4 GB, 8 GB, 12 GB	None
+
+### Overall Learning Summary
+I implemented and tested dynamic product configuration logic in Salesforce Revenue Cloud and Salesforce CPQ. This exercise helped me understand how product attributes, configuration rules, and Product Rules can be used to control attribute availability, restrict incompatible combinations, and automatically select default values based on business requirements.
