@@ -2,56 +2,63 @@
 
 Below are detailed and professional descriptions written from a learning perspective, suitable for adding directly to your README file for manager review.
 
-### 1. Pricing Procedure
+### 1. Contract Item Price
 
-I learned about Pricing Procedures in Salesforce Revenue Cloud, which define the sequence of pricing operations used to calculate the final price of a product or transaction. I explored how pricing procedures use different elements to process pricing information, apply pricing logic, and determine the resulting price. I also learned how pricing procedures support flexible pricing scenarios involving list prices, discounts, adjustments, and other pricing conditions based on business requirements.
+I learned about Contract Item Price in Salesforce Revenue Cloud, which represents pricing information associated with an item covered by a customer contract. I explored how contract-related pricing can be used to maintain agreed prices for products or services throughout the contract lifecycle. I also learned how contract item pricing supports commercial agreements by helping ensure that the applicable price is used when processing transactions associated with the contract.
 
-### 2. Pricing Procedure Elements
+### 2. Contract-Based Pricing
 
-I learned about the different elements available within a Pricing Procedure and how they work together to perform pricing calculations. I explored how individual elements receive input data, perform specific operations, and pass the resulting values to subsequent elements in the procedure.
+I learned about Contract-Based Pricing in Salesforce Revenue Cloud, where product pricing is determined using pricing terms or agreed prices associated with a customer's contract. I understood how contract-based pricing helps businesses honor negotiated prices, discounts, and other commercial conditions instead of always relying on standard catalog pricing.
+For example, if a customer has a negotiated price of ₹9,000 for a product with a standard price of ₹10,000, the applicable contract pricing can be used for eligible transactions according to the configured pricing rules. I also explored how contract-based pricing supports consistent pricing across eligible orders and renewals.
 
-### A. Variables
+### 3. How to Configure Contract-Based Pricing in Revenue Cloud
 
-I learned about Variables in Pricing Procedures, which store or reference values used during pricing calculations. I understood how variables can hold intermediate results, input values, or calculated amounts that are required by subsequent pricing elements. For example, a variable can store a product's base price or the calculated discount amount so that it can be used in later pricing steps.
+I learned the general process of configuring contract-based pricing in Salesforce Revenue Cloud and how contract-related pricing information can be connected to products and transactions.
 
-### B. Constants
+The configuration process includes:
+1. Create the Product: Define the product details and configure its applicable selling model.
+2. Configure Pricing: Set up the appropriate price book, pricing procedure, or pricing configuration required for the product.
+3. Create the Contract: Create the customer contract using the relevant contract management process.
+4. Associate Contract Items: Ensure that the relevant products or services are represented by the appropriate contract items.
+5. Configure Contract Pricing: Define or associate the applicable negotiated pricing information using the supported contract pricing configuration.
+6. Validate the Pricing Logic: Confirm that the pricing procedure or applicable pricing logic uses the contract-specific price when the relevant conditions are met.
+7. Test the Transaction: Create an eligible quote or order and verify that the expected contract price is applied.
+I also learned that the exact setup depends on the Revenue Cloud implementation, the contract data model, and the pricing configuration used in the organization.
 
-I learned about Constants in Pricing Procedures, which represent predefined values used in pricing calculations. I understood how constants can be used for fixed percentages, amounts, or other values that remain unchanged during a particular pricing calculation. For example, a predefined discount percentage of 10% can be used in a pricing calculation when the business requirement specifies a fixed discount.
+### 4. Ramp-Based Pricing
 
-### C. Pricing Setting Element
+I learned about Ramp-Based Pricing in Salesforce Revenue Cloud, which allows businesses to apply different prices, discounts, or commercial terms across predefined periods of a subscription. Instead of maintaining the same pricing throughout the subscription term, ramp-based pricing divides the subscription into segments, with each segment having its own pricing conditions.
+I explored how ramp-based pricing can support introductory offers, promotional periods, and increasing or decreasing discounts over the subscription lifecycle. This approach helps businesses create flexible subscription pricing while clearly defining the applicable commercial terms for each period.
 
-I learned about the Pricing Setting Element, which is used to configure relevant settings that influence how pricing calculations are performed within a Pricing Procedure. I explored how pricing settings help control the behavior of pricing operations based on the configured business requirements. I also learned why appropriate pricing settings are important for ensuring that the procedure processes pricing information according to the intended calculation logic.
+For example, a customer may receive a free trial during the first month, a 10% discount during the first subscription year, and a 20% discount during the second subscription year.
 
-### D. List Price Element
+### 5. Practical Scenario – Free Trial and Yearly Ramp Discounts
 
-I learned about the List Price Element, which establishes or retrieves the list price used as a starting point for pricing calculations. I understood how the list price provides a baseline against which subsequent pricing operations, such as discounts and adjustments, can be applied. For example, if a product has a list price of ₹10,000, subsequent pricing elements can apply the relevant discounts to calculate the final selling price.
+I implemented a business scenario for a subscription product in Salesforce Revenue Cloud using ramp-based pricing. The requirement was to provide a free trial for the first month and then apply different discounts during subsequent yearly subscription periods.
 
-### E. Derived Price
+Business Requirement
+- Product: Annual Subscription Product
+- Base Price: ₹12,000 per year
+- First Month: Free trial
+- Year 1: 10% discount
+- Year 2: 20% discount
+Expected Pricing Calculation
+Subscription Period	Pricing Rule	Expected Price
+Month 1	Free trial	₹0
+Remaining 11 months of Year 1	Annual price with 10% discount, prorated for 11 months	₹9,900
+Year 2	Annual price with 20% discount	₹9,600
+Total for 24 months	Free month + discounted subscription periods	₹19,500
+Assumption: The ₹12,000 base price is annual, pricing is prorated monthly, and the first month is free. Taxes and other charges are excluded.
 
-I learned about Derived Price in Salesforce Revenue Cloud, which refers to a price determined using existing pricing information and configured pricing logic rather than relying only on a manually entered price. I explored how pricing calculations can use inputs such as a base price, pricing conditions, adjustments, and other relevant values to determine a resulting price. This helped me understand how derived pricing supports flexible pricing scenarios and reduces the need to maintain every possible selling price manually.
+Configuration Approach
 
-### 3. Contract
+I learned how to approach the configuration of this scenario by defining the subscription product, selecting the appropriate selling model, and configuring the ramp periods and pricing conditions.
+1. Create the Subscription Product: Configure the product with the required subscription selling model and a base annual price of ₹12,000.
+2. Configure the Subscription Term: Define a 24-month subscription period for the example scenario.
+3. Define the Ramp Periods: Divide the subscription into the introductory trial period, the remaining first-year period, and the second-year period.
+4. Configure the Free Trial: Set up the first-month pricing so that the customer is charged ₹0 for that period.
+5. Configure the Year 1 Discount: Apply a 10% discount to the applicable subscription price for the remaining 11 months.
+6. Configure the Year 2 Discount: Apply a 20% discount to the annual subscription price for the second year.
+7. Test the Pricing: Create the relevant quote or order and verify the period-wise prices, discounts, and total subscription amount.
 
-I learned about Contracts in Salesforce Revenue Cloud, which represent formal agreements between a business and its customers. I explored how contracts can capture commercial terms, product and service agreements, subscription information, and contract duration based on the organization's business processes. I also learned how contracts are connected to the sales and order lifecycle and how they help manage customer agreements after the initial sale.
-
-### 4. Contract Lifecycle Management (CLM)
-
-I learned about Contract Lifecycle Management (CLM), which covers the stages involved in creating, reviewing, approving, executing, managing, renewing, and terminating contracts. I understood how contract lifecycle processes help organizations maintain control over contractual obligations and ensure that agreements follow defined business policies.
-
-I also explored how contract lifecycle management supports contract tracking, approval workflows, renewal planning, amendment management, and contract expiration monitoring. This helped me understand how businesses manage customer agreements throughout their lifecycle.
-
-### 5. Contract Type
-
-I learned about Contract Types and how they help categorize contracts according to their purpose and business requirements. I explored how contract types can be used to distinguish between different agreement scenarios, such as subscription agreements, service contracts, and other commercial arrangements. I also understood that the available contract types and their behavior depend on the configured Salesforce Revenue Cloud solution and the organization's contract management requirements.
-
-### 6. Contract Type Cloning
-
-I learned about Contract Type Cloning, which involves creating a new contract type by copying the configuration of an existing one, where the feature is supported. I understood how cloning can reduce repetitive configuration work when multiple contract types require similar settings but need different business-specific adjustments.
-
-I also explored why cloned configurations should be reviewed before use to ensure that the new contract type has the correct settings, behavior, and applicable business rules.
-
-### 7. Context Use Mapping
-
-I learned about Context Use Mapping in Salesforce Revenue Cloud, which helps associate context information with the appropriate business process or context usage. I explored how mapping supports the use of relevant input data in processes such as pricing and other configured Revenue Cloud operations. I also learned how correct context mapping helps ensure that the required information is available in the expected structure when a business process executes.
-
-For example, a pricing process may require product details, quantity, customer information, or transaction data. Appropriate context mapping helps make the relevant information available to the pricing logic.
+I also learned the importance of validating the subscription dates, proration settings, ramp segment boundaries, and pricing calculation sequence to ensure that the final amount matches the business requirement.
