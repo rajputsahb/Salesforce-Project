@@ -2,63 +2,51 @@
 
 Below are detailed and professional descriptions written from a learning perspective, suitable for adding directly to your README file for manager review.
 
-### 1. Contract Item Price
+### 1. Order Management
 
-I learned about Contract Item Price in Salesforce Revenue Cloud, which represents pricing information associated with an item covered by a customer contract. I explored how contract-related pricing can be used to maintain agreed prices for products or services throughout the contract lifecycle. I also learned how contract item pricing supports commercial agreements by helping ensure that the applicable price is used when processing transactions associated with the contract.
+I learned about Order Management in Salesforce Revenue Cloud, which manages the order lifecycle after a customer purchases products or services. I understood how orders are created from commercial transactions and how they move through different stages, including order submission, decomposition, orchestration, fulfillment, and completion.
+I also explored how Order Management coordinates product and service delivery, tracks order status, and supports complex orders containing multiple products or services. This helped me understand how Salesforce Revenue Cloud connects the sales process with downstream fulfillment activities.
 
-### 2. Contract-Based Pricing
+## 2. Orchestration Process
 
-I learned about Contract-Based Pricing in Salesforce Revenue Cloud, where product pricing is determined using pricing terms or agreed prices associated with a customer's contract. I understood how contract-based pricing helps businesses honor negotiated prices, discounts, and other commercial conditions instead of always relying on standard catalog pricing.
-For example, if a customer has a negotiated price of ₹9,000 for a product with a standard price of ₹10,000, the applicable contract pricing can be used for eligible transactions according to the configured pricing rules. I also explored how contract-based pricing supports consistent pricing across eligible orders and renewals.
+I learned about the Orchestration Process in Salesforce Revenue Cloud, which coordinates the activities required to fulfill an order. I explored how orchestration plans organize fulfillment tasks, define dependencies between activities, and control the sequence in which tasks are executed.
+For example, when a customer purchases an internet service, the orchestration process may coordinate service activation, network provisioning, and customer notification. I also learned how orchestration helps monitor fulfillment progress and identify tasks that are pending, completed, or failed.
 
-### 3. How to Configure Contract-Based Pricing in Revenue Cloud
+## 3. Order Decomposition
 
-I learned the general process of configuring contract-based pricing in Salesforce Revenue Cloud and how contract-related pricing information can be connected to products and transactions.
+I learned about Order Decomposition in Salesforce Revenue Cloud, which breaks down a commercial order into smaller technical or fulfillment components that can be processed by the appropriate systems or teams.
+I understood how a single commercial product can require multiple underlying technical products or fulfillment actions. For example, an internet subscription may be decomposed into a router delivery task, network configuration, and service activation.
+I also explored how decomposition rules and product relationships determine the required fulfillment components. This helps ensure that complex commercial orders can be translated into actionable technical requirements.
 
-The configuration process includes:
-1. Create the Product: Define the product details and configure its applicable selling model.
-2. Configure Pricing: Set up the appropriate price book, pricing procedure, or pricing configuration required for the product.
-3. Create the Contract: Create the customer contract using the relevant contract management process.
-4. Associate Contract Items: Ensure that the relevant products or services are represented by the appropriate contract items.
-5. Configure Contract Pricing: Define or associate the applicable negotiated pricing information using the supported contract pricing configuration.
-6. Validate the Pricing Logic: Confirm that the pricing procedure or applicable pricing logic uses the contract-specific price when the relevant conditions are met.
-7. Test the Transaction: Create an eligible quote or order and verify that the expected contract price is applied.
-I also learned that the exact setup depends on the Revenue Cloud implementation, the contract data model, and the pricing configuration used in the organization.
+### 4. Dynamic Revenue Orchestration
 
-### 4. Ramp-Based Pricing
+I learned about Dynamic Revenue Orchestration in Salesforce Revenue Cloud, which supports the coordination and execution of order fulfillment activities based on configured business logic and dependencies.
+I explored how orchestration can adapt fulfillment execution to the requirements of an order, including task sequencing, dependency management, and fulfillment status tracking. I also learned how dynamic orchestration helps coordinate activities across different fulfillment systems and supports more flexible handling of complex product and service orders.
+For example, a service activation task may depend on successful network provisioning. The orchestration process ensures that dependent activities follow the required execution sequence.
 
-I learned about Ramp-Based Pricing in Salesforce Revenue Cloud, which allows businesses to apply different prices, discounts, or commercial terms across predefined periods of a subscription. Instead of maintaining the same pricing throughout the subscription term, ramp-based pricing divides the subscription into segments, with each segment having its own pricing conditions.
-I explored how ramp-based pricing can support introductory offers, promotional periods, and increasing or decreasing discounts over the subscription lifecycle. This approach helps businesses create flexible subscription pricing while clearly defining the applicable commercial terms for each period.
+### 5. How to Create a Technical Product
 
-For example, a customer may receive a free trial during the first month, a 10% discount during the first subscription year, and a 20% discount during the second subscription year.
+I learned how to create and configure a Technical Product in Salesforce Revenue Cloud to represent the technical components or services required to fulfill a commercial offering. I understood the difference between a customer-facing commercial product and the technical products used to support its delivery.
 
-### 5. Practical Scenario – Free Trial and Yearly Ramp Discounts
+### The general configuration process includes:
 
-I implemented a business scenario for a subscription product in Salesforce Revenue Cloud using ramp-based pricing. The requirement was to provide a free trial for the first month and then apply different discounts during subsequent yearly subscription periods.
+1. Create the Product: Define the technical product's name, product code, and relevant product information.
+2. Configure the Product Classification: Assign the appropriate classification or record type, where applicable, based on the implementation.
+3. Configure Technical Attributes: Define the required technical characteristics, specifications, or properties.
+4. Associate Product Relationships: Establish relationships between the technical product and the relevant commercial product.
+5. Configure Decomposition Rules: Define how the commercial order should be translated into the required technical products or fulfillment components.
+6. Configure Orchestration: Ensure that the decomposed technical components are processed through the appropriate fulfillment tasks.
+7. Test the Configuration: Submit an eligible order and verify that the expected technical products and fulfillment activities are generated.
+I also learned how technical products support service provisioning and downstream fulfillment processes in scenarios where a commercial product requires multiple technical components.
 
-Business Requirement
-- Product: Annual Subscription Product
-- Base Price: ₹12,000 per year
-- First Month: Free trial
-- Year 1: 10% discount
-- Year 2: 20% discount
-Expected Pricing Calculation
-Subscription Period	Pricing Rule	Expected Price
-Month 1	Free trial	₹0
-Remaining 11 months of Year 1	Annual price with 10% discount, prorated for 11 months	₹9,900
-Year 2	Annual price with 20% discount	₹9,600
-Total for 24 months	Free month + discounted subscription periods	₹19,500
-Assumption: The ₹12,000 base price is annual, pricing is prorated monthly, and the first month is free. Taxes and other charges are excluded.
+### 6. Fulfillment Workspace
 
-Configuration Approach
+I learned about the Fulfillment Workspace in Salesforce Revenue Cloud, which provides a workspace for users to review and manage fulfillment activities associated with orders. I explored how fulfillment teams can use the workspace to monitor work items, review their statuses, and track progress toward completing customer orders.
+I also learned how fulfillment visibility helps users identify pending activities, investigate failures, and coordinate the tasks required to deliver products or activate services. This supports better operational monitoring and helps teams resolve fulfillment issues efficiently.
 
-I learned how to approach the configuration of this scenario by defining the subscription product, selecting the appropriate selling model, and configuring the ramp periods and pricing conditions.
-1. Create the Subscription Product: Configure the product with the required subscription selling model and a base annual price of ₹12,000.
-2. Configure the Subscription Term: Define a 24-month subscription period for the example scenario.
-3. Define the Ramp Periods: Divide the subscription into the introductory trial period, the remaining first-year period, and the second-year period.
-4. Configure the Free Trial: Set up the first-month pricing so that the customer is charged ₹0 for that period.
-5. Configure the Year 1 Discount: Apply a 10% discount to the applicable subscription price for the remaining 11 months.
-6. Configure the Year 2 Discount: Apply a 20% discount to the annual subscription price for the second year.
-7. Test the Pricing: Create the relevant quote or order and verify the period-wise prices, discounts, and total subscription amount.
+### 7. Commercial Product
 
-I also learned the importance of validating the subscription dates, proration settings, ramp segment boundaries, and pricing calculation sequence to ensure that the final amount matches the business requirement.
+I learned about Commercial Products in Salesforce Revenue Cloud, which represent the products or services offered to customers for purchase. These products are typically presented in the product catalog and used during product discovery, configuration, quoting, and ordering.
+
+I understood how commercial products define the customer-facing offering, including relevant product information, pricing, selling models, and configuration options. I also explored how commercial products can be associated with technical products when the offering requires technical provisioning or fulfillment.
+For example, an Internet Subscription is a commercial product that the customer purchases, while the router configuration and network activation components may be represented by technical products or fulfillment activities.
