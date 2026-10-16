@@ -1,52 +1,58 @@
-### Salesforce Revenue Cloud – Learning Topics
+### Salesforce Data Cloud – Learning Topics
 
 Below are detailed and professional descriptions written from a learning perspective, suitable for adding directly to your README file for manager review.
 
-### 1. Order Management
+### 1. Salesforce Data Cloud
 
-I learned about Order Management in Salesforce Revenue Cloud, which manages the order lifecycle after a customer purchases products or services. I understood how orders are created from commercial transactions and how they move through different stages, including order submission, decomposition, orchestration, fulfillment, and completion.
-I also explored how Order Management coordinates product and service delivery, tracks order status, and supports complex orders containing multiple products or services. This helped me understand how Salesforce Revenue Cloud connects the sales process with downstream fulfillment activities.
+I learned about Salesforce Data Cloud, which helps organizations connect, ingest, unify, and analyze customer data from multiple sources. I explored how Data Cloud brings together data from Salesforce applications, external systems, cloud storage, and other platforms to create a more comprehensive view of customer information.
+I also learned about key Data Cloud components, including Data Streams, Data Lake Objects (DLOs), Data Model Objects (DMOs), data mapping, and identity resolution. I understood how ingested data can be transformed into a standardized data model and made available for segmentation, insights, and other Salesforce use cases.
 
-## 2. Orchestration Process
+### 2. AWS S3 Bucket Integration with Data Cloud
 
-I learned about the Orchestration Process in Salesforce Revenue Cloud, which coordinates the activities required to fulfill an order. I explored how orchestration plans organize fulfillment tasks, define dependencies between activities, and control the sequence in which tasks are executed.
-For example, when a customer purchases an internet service, the orchestration process may coordinate service activation, network provisioning, and customer notification. I also learned how orchestration helps monitor fulfillment progress and identify tasks that are pending, completed, or failed.
+I learned how to use an Amazon Web Services (AWS) S3 bucket as an external data source for Salesforce Data Cloud. I explored how files stored in Amazon S3 can be ingested into Data Cloud to make external business or customer information available for further processing and analysis.
+I also studied the general integration process, including preparing the S3 bucket, organizing the source files, configuring the required AWS access permissions, and setting up the appropriate connection in Data Cloud.
 
-## 3. Order Decomposition
+### The general process includes:
 
-I learned about Order Decomposition in Salesforce Revenue Cloud, which breaks down a commercial order into smaller technical or fulfillment components that can be processed by the appropriate systems or teams.
-I understood how a single commercial product can require multiple underlying technical products or fulfillment actions. For example, an internet subscription may be decomposed into a router delivery task, network configuration, and service activation.
-I also explored how decomposition rules and product relationships determine the required fulfillment components. This helps ensure that complex commercial orders can be translated into actionable technical requirements.
+1. Create or identify an AWS S3 bucket.
+2. Upload the required data files, such as CSV files, into the bucket.
+3. Configure the necessary AWS permissions and access credentials.
+4. Create the appropriate AWS S3 connection or data stream in Data Cloud.
+5. Select the source file and configure the ingestion settings.
+6. Map the ingested fields to the relevant Data Cloud data model.
+7. Run the ingestion process and validate the resulting records.
 
-### 4. Dynamic Revenue Orchestration
+I learned how this integration helps businesses bring externally stored data into Salesforce Data Cloud without manually entering each record.
 
-I learned about Dynamic Revenue Orchestration in Salesforce Revenue Cloud, which supports the coordination and execution of order fulfillment activities based on configured business logic and dependencies.
-I explored how orchestration can adapt fulfillment execution to the requirements of an order, including task sequencing, dependency management, and fulfillment status tracking. I also learned how dynamic orchestration helps coordinate activities across different fulfillment systems and supports more flexible handling of complex product and service orders.
-For example, a service activation task may depend on successful network provisioning. The orchestration process ensures that dependent activities follow the required execution sequence.
+### 3. Connecting Another Salesforce Org Using Data Cloud
 
-### 5. How to Create a Technical Product
+I learned how to connect another Salesforce organization to Salesforce Data Cloud to ingest and work with data originating from a separate Salesforce environment. I explored how this integration can help organizations consolidate information from multiple Salesforce orgs for customer analysis and other data-driven business processes.
+I studied the general connection process, including identifying the source Salesforce org, configuring the required authentication and permissions, establishing the supported connection in Data Cloud, selecting the required objects, and configuring the data stream.
 
-I learned how to create and configure a Technical Product in Salesforce Revenue Cloud to represent the technical components or services required to fulfill a commercial offering. I understood the difference between a customer-facing commercial product and the technical products used to support its delivery.
+### The general process includes:
 
-### The general configuration process includes:
+1. Identify the source Salesforce org and the objects required for integration.
+2. Verify the necessary access permissions and authentication requirements.
+3. Configure the supported Salesforce connection in the target Data Cloud environment.
+4. Select the source objects, such as Account, Contact, or a custom object.
+5. Configure the ingestion schedule and other available data stream settings.
+6. Map source fields to the appropriate Data Cloud data model objects.
+7. Run the ingestion process and validate the imported data.
 
-1. Create the Product: Define the technical product's name, product code, and relevant product information.
-2. Configure the Product Classification: Assign the appropriate classification or record type, where applicable, based on the implementation.
-3. Configure Technical Attributes: Define the required technical characteristics, specifications, or properties.
-4. Associate Product Relationships: Establish relationships between the technical product and the relevant commercial product.
-5. Configure Decomposition Rules: Define how the commercial order should be translated into the required technical products or fulfillment components.
-6. Configure Orchestration: Ensure that the decomposed technical components are processed through the appropriate fulfillment tasks.
-7. Test the Configuration: Submit an eligible order and verify that the expected technical products and fulfillment activities are generated.
-I also learned how technical products support service provisioning and downstream fulfillment processes in scenarios where a commercial product requires multiple technical components.
+I also learned the importance of verifying field mappings, permissions, connection status, and ingestion results to ensure that data from the connected Salesforce org is available correctly in Data Cloud.
 
-### 6. Fulfillment Workspace
+### 4. Creating a Custom Object Using a CSV File
 
-I learned about the Fulfillment Workspace in Salesforce Revenue Cloud, which provides a workspace for users to review and manage fulfillment activities associated with orders. I explored how fulfillment teams can use the workspace to monitor work items, review their statuses, and track progress toward completing customer orders.
-I also learned how fulfillment visibility helps users identify pending activities, investigate failures, and coordinate the tasks required to deliver products or activate services. This supports better operational monitoring and helps teams resolve fulfillment issues efficiently.
+I learned how to prepare a CSV file containing structured business data and use it to create a corresponding custom object in Salesforce. I explored how CSV column headers can be used to identify the fields required for the object and how each column's data type must be considered when configuring the fields.
 
-### 7. Commercial Product
+### The general process includes:
 
-I learned about Commercial Products in Salesforce Revenue Cloud, which represent the products or services offered to customers for purchase. These products are typically presented in the product catalog and used during product discovery, configuration, quoting, and ordering.
+1. Prepare the CSV File: Organize the data into columns with clear headers and consistent values.
+2. Define the Object Structure: Identify the custom object name and the fields required to store the CSV data.
+3. Create the Custom Object: Create the object in Salesforce or configure the appropriate target data structure, depending on the intended use.
+4. Create the Fields: Define the fields based on the CSV columns and choose suitable data types, such as Text, Number, Date, or Email.
+5. Import the CSV Data: Use an appropriate import tool or Data Cloud ingestion process to load the records.
+6. Map the Fields: Match each CSV column to the corresponding Salesforce field or Data Cloud field.
+7. Validate the Data: Verify record counts, field values, data types, and any import errors.
 
-I understood how commercial products define the customer-facing offering, including relevant product information, pricing, selling models, and configuration options. I also explored how commercial products can be associated with technical products when the offering requires technical provisioning or fulfillment.
-For example, an Internet Subscription is a commercial product that the customer purchases, while the router configuration and network activation components may be represented by technical products or fulfillment activities.
+I also learned that creating a Salesforce custom object and ingesting a CSV file into Data Cloud are separate activities. A CSV file can be ingested directly into Data Cloud as a data source, but that process does not automatically create a Salesforce custom object in the CRM org. The correct approach depends on whether the requirement is to create a CRM object, ingest data into Data Cloud, or perform both operations.
