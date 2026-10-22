@@ -1,346 +1,181 @@
-### Salesforce Partner Community and Managed Package Management
+# Data Quality Manager – Salesforce Project
 
-### 1. Salesforce Partner Community
+## 1. Project Overview
 
-I learned how to access and use the Salesforce Partner Community, which provides resources for Salesforce partners to develop, manage, and distribute applications through the Salesforce ecosystem.
+I developed a Salesforce application called **Data Quality Manager** to identify duplicate records and missing field values during bulk data processing. The application helps improve data quality by detecting potential issues in Account and Contact records.
 
-### Why We Use the Partner Community
+The application uses custom objects, custom fields, Lightning Web Components (LWC), Apex classes, and Apex test classes to identify and track data quality issues.
 
-To access partner resources and onboarding information.
+The main objective of this project is to help Salesforce administrators and users identify duplicate records and incomplete data more efficiently, especially when working with bulk uploads.
 
-To manage partner-related business and technical activities.
+## 2. Project Objectives
 
-To explore AppExchange publishing and application distribution resources.
+I developed this project to achieve the following objectives:
 
-To access relevant partner tools and support, depending on account permissions.
+- Identify duplicate Account records based on the Phone field.
+- Identify duplicate Contact records based on the Email field.
+- Detect missing or blank values in selected fields.
+- Store detected data quality issues in a dedicated custom object.
+- Track duplicate records and data quality issues within Salesforce.
+- Provide a user-friendly interface using Lightning Web Components.
+- Process bulk data while following Salesforce governor limits and bulkification best practices.
+- Maintain code quality through Apex test classes.
 
-To manage the partner organization's information and team access.
+## 3. Salesforce Application Structure
 
-### Steps to Access the Partner Community
+I created a Salesforce application containing four objects: Account, Contact, Data Quality Issue, and Duplicate Record.
 
-Open the official Salesforce partner portal.
+| Object | Purpose |
+|---|---|
+| Account | Stores account information and is checked for duplicate phone numbers and missing required business fields. |
+| Contact | Stores contact information and is checked for duplicate email addresses and missing required business fields. |
+| Data Quality Issue | Stores information about detected data quality problems, such as missing values or incomplete records. |
+| Duplicate Record | Stores information about duplicate records identified during validation, including the relevant record references and duplicate criteria. |
 
-Sign in using the appropriate Salesforce account or begin the partner registration process if required.
+The Account and Contact objects are standard Salesforce objects. The Data Quality Issue and Duplicate Record objects are custom objects created for this application.
 
-Complete the applicable onboarding steps.
+I also created custom fields on the relevant objects to support duplicate detection, issue tracking, and record identification.
 
-Associate the correct partner organization where prompted.
+## 4. Custom Objects and Fields
 
-Access the available partner resources and AppExchange-related tools.
+I learned how to create custom objects and custom fields to support the business requirements of the Data Quality Manager application.
 
-Verify that the account has the permissions required for the intended activities.
+### Account
+- Used the standard Phone field to identify potential duplicate Account records.
+- Checked selected fields for missing or blank values.
+- Used Account records as the source data for validation.
 
-Learning outcome: I understood the purpose of the Partner Community and how it supports partner onboarding and AppExchange-related activities.
+### Contact
+- Used the standard Email field to identify potential duplicate Contact records.
+- Checked selected fields for missing or blank values.
+- Used Contact records as the source data for validation.
 
-### 2. Connecting to Different Salesforce Organizations
+### Data Quality Issue
+- Created a custom object to store detected data quality issues.
+- Used appropriate custom fields to capture the issue type, related record, missing field details, and issue status, according to the configured schema.
 
-I learned how to connect multiple Salesforce organizations to Visual Studio Code using Salesforce CLI. This allows me to work with a development org, a packaging org, and a separate test or subscriber org.
+### Duplicate Record
+- Created a custom object to store duplicate detection results.
+- Used appropriate fields to capture the duplicate criteria and references to the records involved, according to the configured schema.
 
-## Why We Connect Different Orgs
+## 5. Duplicate Detection Logic
 
-To develop and maintain Salesforce components.
+I implemented duplicate detection logic to identify records that share the same values in selected fields.
 
-To create and manage package versions.
+### Account Duplicate Detection
+- Used the Account Phone field as the matching criterion.
+- Compared phone numbers across Account records.
+- Identified records that matched the configured phone-number criteria.
+- Created duplicate issue records so the detected matches could be reviewed.
 
-To install and test packages in a separate organization.
+### Contact Duplicate Detection
+- Used the Contact Email field as the matching criterion.
+- Compared email addresses across Contact records.
+- Identified records that matched the configured email criteria.
+- Created duplicate issue records so the detected matches could be reviewed.
 
-To validate the application in an environment similar to a customer's org.
+### Example
 
-To reduce the risk of testing changes only in the development environment.
+| Object | Matching Field | Example | Expected Result |
+|---|---|---|---|
+| Account | Phone | `9876543210` appears on two Accounts | Flag a potential duplicate |
+| Contact | Email | `user@example.com` appears on two Contacts | Flag a potential duplicate |
 
-### Steps I Followed
+I designed the validation around the selected business matching fields. The exact matching behavior depends on the implemented comparison rules, including whether values are normalized before comparison.
 
-Open the Salesforce DX project in VS Code.
+## 6. Missing Field Detection
 
-Open the integrated terminal.
+I implemented validation logic to identify records with missing or blank values in selected fields.
 
-Authorize the first Salesforce org.
+**The process includes:**
+- Checking configured fields for null or blank values.
+- Identifying incomplete Account and Contact records.
+- Recording the issue type and related record.
+- Storing the detected issue in the Data Quality Issue custom object.
+- Making the issue available for review and correction.
 
-Assign an alias, such as PackagingOrg.
+For example, if an Account is missing a required business field or a Contact has a blank value in a field selected for validation, the application can record the missing-field issue.
 
-Authorize the second Salesforce org with a different alias, such as PackageTestOrg.
+The fields considered missing are determined by the validation rules configured in the application.
 
-Verify each connection.
+## 7. Lightning Web Component (LWC)
 
-Select the appropriate org when performing development or package installation tasks.
+I developed a Lightning Web Component to provide a user interface for working with the Data Quality Manager application.
 
-Example Commands
+The LWC serves as the presentation layer and allows users to interact with the application's data quality functionality.
 
-sf org login web --alias PackagingOrg
-sf org login web --alias PackageTestOrg
-sf org list
-sf org display --target-org PackagingOrg
+**Key responsibilities include:**
+- Providing a user-friendly interface for data quality operations.
+- Invoking Apex methods to perform validation or retrieve issue information.
+- Displaying duplicate detection results and missing-field issues, where implemented.
+- Helping users review the results of data quality checks.
 
-Learning outcome: I learned how to manage multiple Salesforce org connections and select the correct org for development, packaging, and testing.
+The LWC communicates with Apex classes to execute the server-side logic and display the relevant results.
 
-### 3. First-Generation Managed Package (1GP)
+## 8. Apex Classes and Test Classes
 
-I learned about First-Generation Packaging (1GP), the traditional Salesforce managed packaging model. In this model, the package is created and managed through a packaging org, and package components are maintained within that org.
+I developed three Apex classes to implement the application's server-side functionality, along with Apex test classes to validate the business logic.
 
-## Key Characteristics
+The classes are organized to support data validation, duplicate detection, issue management, and communication with the LWC, according to the implementation.
 
-Uses a packaging org to create and maintain the managed package.
+### Apex Development
+- Implemented the server-side business logic.
+- Used SOQL to retrieve and compare relevant records.
+- Applied bulkification practices to support multiple records.
+- Used appropriate exception handling and validation.
+- Followed Salesforce governor-limit considerations.
 
-Package components are managed through Salesforce Setup and package management tools.
+### Apex Test Classes
+- Created test methods to validate duplicate Account detection.
+- Created test methods to validate duplicate Contact detection.
+- Tested missing-field scenarios.
+- Validated the creation of data quality issue records.
+- Tested bulk scenarios and relevant edge cases.
+- Verified expected behavior using assertions.
 
-Package versions are created and distributed to subscriber orgs.
+The test classes help confirm that the Apex logic behaves as expected and provide code coverage for deployment and packaging requirements.
 
-Supports managed application distribution and controlled upgrades.
+## 9. Bulk Data Processing
 
-Uses a registered namespace for the managed package.
+I designed the application to support data quality validation for bulk data scenarios, such as importing multiple Account and Contact records.
 
-Typical Workflow
+**Bulk-processing considerations include:**
+- Processing collections of records instead of relying on single-record assumptions.
+- Avoiding SOQL queries inside loops.
+- Avoiding DML operations inside loops.
+- Using collections such as Sets and Maps for efficient matching.
+- Inserting detected issue records in bulk.
+- Considering governor limits when processing large data volumes.
 
-Prepare the packaging org.
+The application can validate records created through bulk data loading, provided the relevant Apex or automation entry points are configured to run during that process. For very large datasets, processing may need to be split into manageable batches.
 
-Register and configure the namespace.
+## 10. End-to-End Project Flow
 
-Create the managed package.
+1. Account and Contact records are uploaded or inserted in bulk.
+2. The configured validation logic checks Account Phone values for potential duplicates.
+3. The configured validation logic checks Contact Email values for potential duplicates.
+4. The application checks selected fields for missing or blank values.
+5. Duplicate findings are stored in the Duplicate Record custom object.
+6. Missing-field and other configured data quality findings are stored in the Data Quality Issue custom object.
+7. The LWC provides an interface to review the results, according to the implemented features.
+8. Users can review the findings and take appropriate corrective action.
 
-Add the required components.
+## 11. Salesforce Best Practices Applied
 
-Upload a package version.
+During this project, I focused on the following Salesforce development practices:
 
-Install the package in a separate org.
+- **Bulkification:** Designed Apex logic to handle multiple records efficiently.
+- **Governor-limit management:** Reduced unnecessary SOQL queries and DML operations.
+- **Reusable Apex logic:** Organized server-side logic into Apex classes.
+- **LWC integration:** Used Apex methods to connect the UI with business logic.
+- **Test coverage:** Created Apex test classes to validate the expected behavior.
+- **Data quality tracking:** Used dedicated custom objects to record detected issues.
+- **Maintainability:** Separated data storage, business logic, and user-interface responsibilities.
 
-Test functionality and manage future package releases.
+## 12. Overall Learning Summary
 
-Learning outcome: I understood the traditional packaging process and how a 1GP managed package is maintained and distributed.
+Through this project, I gained practical experience in developing a Salesforce data quality application using standard objects, custom objects, custom fields, Lightning Web Components, Apex classes, and Apex test classes.
 
-### 4. Second-Generation Managed Package (2GP)
+I learned how to identify potential duplicate Account records using phone numbers, detect duplicate Contact records using email addresses, and identify missing field values. I also explored how to store validation results in dedicated custom objects and design bulk-aware Apex logic for data processing.
 
-I learned about Second-Generation Packaging (2GP), which uses a source-driven development approach. The package source is maintained in a Salesforce DX project and can be tracked through version control systems such as Git.
-
-### Key Characteristics
-
-Uses Salesforce DX project structure and Salesforce CLI.
-
-Stores package metadata in source files.
-
-Supports source control and automated development workflows.
-
-Creates package versions through Salesforce CLI.
-
-Uses a Dev Hub and the appropriate namespace configuration.
-
-Supports repeatable package builds and version-based distribution.
-
-### Typical Workflow
-
-Set up a Dev Hub-enabled org.
-
-Register or configure the namespace for packaging.
-
-Create a Salesforce DX project.
-
-Prepare the sfdx-project.json package configuration.
-
-Add the required Salesforce metadata.
-
-Create the 2GP package.
-
-Create a package version.
-
-Install the package in a separate test org.
-
-Validate functionality before distributing the package.
-
-Comparison: 1GP vs. 2GP
-
-Feature
-
-1GP Managed Package
-
-2GP Managed Package
-
-Development approach
-
-Primarily managed through the packaging org
-
-Source-driven development
-
-Main development tools
-
-Salesforce Setup and supported packaging tools
-
-Salesforce CLI, VS Code, and source control
-
-Package source
-
-Maintained in the packaging org
-
-Maintained in a Salesforce DX project
-
-Package version creation
-
-Through the traditional package upload process
-
-Through Salesforce CLI and package version creation
-
-Dev Hub
-
-Not the central packaging requirement in the traditional workflow
-
-Required for 2GP package development
-
-Source control
-
-Can be used, but is not the core packaging model
-
-Fits naturally into source-control workflows
-
-Best suited for
-
-Existing traditional managed packages
-
-Modern, source-driven package development
-
-Learning outcome: I understood the key differences between 1GP and 2GP and how 2GP supports source-driven development and repeatable package builds.
-
-### 5. Installed Packages
-
-I learned how to install a managed package into a Salesforce organization using a package installation link or package version identifier.
-
-Why We Install Packages
-
-To add reusable Salesforce functionality to another org.
-
-To install custom objects, fields, Apex classes, LWCs, and other packaged components.
-
-To test the application in a subscriber org.
-
-To distribute functionality without manually deploying each component.
-
-Steps I Followed
-
-Create or identify the required managed package version.
-
-Obtain the correct installation link or package version ID.
-
-Log in to the target Salesforce org.
-
-Open the installation link or use the supported CLI installation command.
-
-Select the appropriate installation options.
-
-Grant the required access to users or profiles, where applicable.
-
-Complete the installation.
-
-Verify the package under Setup → Installed Packages.
-
-Test the installed functionality and permissions.
-
-Example Salesforce CLI command:
-
-sf package install --package <package-version-id> --target-org PackageTestOrg --wait 30
-
-Learning outcome: I learned how to install a package into another Salesforce org and verify that the packaged components work correctly.
-
-### 6. Package Management
-
-I learned how Salesforce package management helps developers track package details, versions, installations, and upgrades.
-
-Key Areas I Explored
-
-Packages: Containers for related Salesforce components.
-
-Package versions: Specific releases of a package.
-
-Installed Packages: A Setup page for viewing packages installed in an org.
-
-Package dependencies: Components or packages required by another package.
-
-Package upgrades: Installing a newer compatible package version.
-
-Subscriber orgs: Salesforce organizations where a package is installed.
-
-Version testing: Validating the package before releasing it to customers.
-
-General Package Management Process
-
-Create or update the package source.
-
-Create a new package version.
-
-Validate installation and functionality.
-
-Resolve dependency or metadata issues.
-
-Install the tested version in the required orgs.
-
-Plan upgrades and document changes for future releases.
-
-Learning outcome: I understood how package versions and installations are managed throughout the Salesforce application lifecycle.
-
-### 7. Namespace Settings
-
-I learned about namespace prefixes and their importance in Salesforce managed packages. A namespace uniquely identifies a package's components and helps prevent naming conflicts with components created by other developers.
-
-Why We Use a Namespace
-
-To distinguish packaged components from components created by other organizations.
-
-To reduce naming conflicts between applications.
-
-To identify components that belong to a managed package.
-
-To support the distribution of reusable applications.
-
-Example
-
-If the namespace is mycompany, a custom object in a managed package may have an API name such as:
-
-mycompany__Customer_Record__c
-
-A namespaced component's API name may appear differently depending on the component type and where it is referenced.
-
-Key Points I Learned
-
-Choose an appropriate namespace before creating the package.
-
-Register the namespace through the supported Salesforce setup process.
-
-Associate it with the appropriate packaging configuration.
-
-Verify that the namespace and packaging org are configured correctly.
-
-Understand that a registered namespace is generally not something that can simply be renamed later.
-
-Learning outcome: I understood how namespace settings identify managed package components and why the namespace must be configured carefully.
-
-### 8. Namespace Registries
-
-I learned about namespace registration and how Salesforce associates a namespace prefix with an organization for supported packaging workflows.
-
-Purpose of Namespace Registration
-
-To establish a unique prefix for packaged components.
-
-To identify the namespace associated with a package.
-
-To support package creation and distribution.
-
-To reduce naming conflicts across Salesforce applications.
-
-General Steps
-
-Sign in to the Salesforce org used for the supported packaging setup.
-
-Open the relevant namespace registration or namespace settings page in Setup.
-
-Review the available namespace configuration options.
-
-Register or associate the appropriate namespace according to the packaging workflow.
-
-Verify that the namespace is connected to the intended packaging setup.
-
-Confirm that the package configuration uses the correct namespace.
-
-Important learning: Namespace registration and package creation are related but separate activities. The exact Setup page and association steps depend on the packaging model and the Salesforce org configuration. For 2GP, the namespace must be registered and linked to the Dev Hub as required by Salesforce.
-
-### 9. Overall Learning Summary
-
-During this learning activity, I explored Salesforce Partner Community access, connections between multiple Salesforce organizations, and the differences between 1GP and 2GP managed packages. I also learned how to install packages, manage package versions, and configure namespaces for managed package development.
-
-This learning helped me understand the end-to-end packaging process, from preparing the development environment and registering the namespace to creating package versions, installing packages in subscriber orgs, and managing application releases.
+This project strengthened my understanding of Salesforce application development, Apex programming, LWC integration, data validation, bulk processing, testing, and governor-limit management.
