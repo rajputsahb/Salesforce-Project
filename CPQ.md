@@ -1,235 +1,209 @@
-# Salesforce Revenue Cloud – Credit Memo Generation and Usage-Based Products
+# Salesforce Revenue Cloud – Product Bundling and Conditional Discounting
 
-## 1. Generating Credit Memos in Salesforce Revenue Cloud
+## 1. Project Overview
 
-I learned how to generate Credit Memos in Salesforce Revenue Cloud to correct billing amounts or provide credits to customers when required.
+I worked on two business scenarios in Salesforce Revenue Cloud to understand product configuration and pricing implementation.
 
-A Credit Memo is a financial document that records a credit against a customer's billed amount. It can be used for billing corrections, service adjustments, approved discounts, or other eligible credit scenarios.
+- **Scenario 1 – Laptop Bundle Configuration:** Configure a laptop bundle containing a laptop, mouse, and warranty, where the warranty is mandatory and the mouse is optional.
+- **Scenario 2 – Conditional Discounting:** Configure a 10% discount on a product priced at ₹10,000, but prevent the discount from applying to customers whose Account Type is Government.
 
-### Why We Use Credit Memos
-- To correct an overcharged invoice.
-- To reduce the amount a customer owes.
-- To record approved billing adjustments.
-- To handle eligible product returns or service cancellations.
-- To maintain accurate billing records and financial tracking.
+For these scenarios, I worked with product configuration, custom objects and fields, decision tables, pricing procedures, list prices, and pricing-related configuration values.
 
-### Step-by-Step Process
+## 2. Scenario 1: Laptop Bundle with Mandatory Warranty and Optional Mouse
 
-#### Step 1: Review the Invoice
-I learned how to identify the invoice that requires a credit adjustment.
+### Business Requirement
 
-- Open the relevant invoice in Revenue Cloud.
-- Review the invoice number, customer, invoice lines, and total amount.
-- Identify the product or service line that requires a credit.
-- Verify the reason for issuing the credit.
+A customer wants to purchase a laptop bundle containing three products:
 
-#### Step 2: Identify the Credit Amount
-I learned how to determine the amount that needs to be credited.
+- Laptop – Main product.
+- Mouse – Optional accessory.
+- Warranty – Mandatory service.
 
-For example, if the original invoice amount is ₹10,000 and the customer was overcharged by ₹2,000, the required credit amount is ₹2,000, subject to the applicable billing rules.
+The customer must purchase the warranty with the laptop, but the mouse should be optional.
 
-#### Step 3: Initiate Credit Memo Creation
-I learned how to start the Credit Memo creation process using the supported action or workflow available in the Salesforce org.
+### Objective
 
-- Open the relevant billing or invoice record.
-- Locate the configured action for creating a Credit Memo or initiating a credit process.
-- Select the appropriate invoice or eligible invoice line.
-- Follow the available workflow to create the credit record.
+I implemented the bundle configuration so that the warranty is required whenever the laptop bundle is purchased, while the customer can choose whether to include the mouse.
 
-The exact action label and navigation may vary depending on the Revenue Cloud version and configuration.
+### Step 1: Create the Products
 
-#### Step 4: Enter Credit Memo Details
-I learned how to review and enter the required Credit Memo information.
+I learned how to create and configure the individual products that make up the bundle.
 
-Typical information may include:
-- Customer or billing account.
-- Reference invoice.
-- Credit Memo date.
-- Credit reason.
-- Product or invoice line being credited.
-- Credit quantity or amount.
-- Applicable tax or adjustment details.
-
-#### Step 5: Review the Credit Memo Lines
-I learned how to verify the credit amount and the associated invoice line before proceeding.
-
-- Confirm the product or service being credited.
-- Verify the quantity and unit amount, where applicable.
-- Review the calculated credit amount.
-- Check applicable tax and adjustments.
-- Confirm that the credit does not exceed the eligible amount under the configured rules.
-
-#### Step 6: Save and Validate the Credit Memo
-I learned how to save the Credit Memo and verify that the record contains the expected details.
-
-- Save the record or complete the configured creation process.
-- Review the Credit Memo status.
-- Confirm the customer, invoice reference, and credit amount.
-- Resolve any validation errors before proceeding.
-
-#### Step 7: Post or Complete the Credit Memo
-I learned that some Revenue Cloud processes require a Credit Memo to be submitted, approved, or posted before the financial adjustment is finalized.
-
-- Complete the applicable approval or processing steps.
-- Verify the resulting status.
-- Confirm that the credit is applied or associated with the intended invoice according to the configured process.
-- Review the resulting invoice balance and downstream financial records.
-
-The exact posting and invoice-adjustment behavior depends on the billing configuration and supported accounting workflow.
-
-### Example: Credit Memo Calculation
-
-| Description | Amount |
-|---|---:|
-| Original invoice amount | ₹10,000 |
-| Credit Memo amount | ₹2,000 |
-| Adjusted amount due | ₹8,000 |
-
-This example assumes the ₹2,000 credit is applied to the invoice and there are no other payments or adjustments.
-
-### Learning Outcome
-I learned how to identify an invoice requiring a credit, initiate Credit Memo creation, enter the credit details, validate the amount, and complete the applicable processing steps.
-
----
-
-## 2. Learning About Usage-Based Products in Revenue Cloud
-
-I learned how Usage-Based Products support business models in which customers are charged according to their actual consumption of a product or service.
-
-Unlike a fixed subscription, a usage-based product can calculate charges using recorded consumption, such as API requests, data usage, transactions, or service units.
-
-### Why We Use Usage-Based Products
-- To charge customers based on actual consumption.
-- To support pay-as-you-go pricing models.
-- To configure usage allowances or committed quantities.
-- To manage usage-based charges alongside subscription products.
-- To support pricing models that depend on usage measurements.
-
-### Example
-A company offers an API service and charges ₹2 for every 1,000 API requests.
-
-If a customer consumes 50,000 API requests, the usage charge would be:
-
-- Total usage: 50,000 requests.
-- Billing unit: 1,000 requests.
-- Price per billing unit: ₹2.
-- Usage charge: ₹100, before applicable taxes, discounts, or additional fees.
-
-## 3. Creating a Usage-Based Product
-
-I learned the general process of configuring a usage-based offering and its related usage records in Revenue Cloud. The exact object names and Setup navigation depend on the Revenue Cloud edition and enabled features.
-
-### Step 1: Define the Business Requirement
-I first identified how the customer would consume the service and how the business intended to charge for it.
-
-I reviewed:
-- The usage measurement, such as API requests or data volume.
-- The unit of measure.
-- The usage rate or pricing method.
-- The billing frequency.
-- Any included allowance or commitment.
-- The rules for calculating charges.
-
-### Step 2: Create the Product
-I learned how to create the product record that represents the service being sold.
-
-Typical activities include:
-1. Open the relevant product management area.
-2. Create a product with a suitable name and product code.
-3. Enter the required product details.
-4. Configure the applicable product classification and selling model.
-5. Enable or configure the usage-related behavior supported by the org.
-6. Save and validate the product configuration.
-
-### Step 3: Configure the Usage Definition
-I learned how a usage definition describes the type of consumption being measured.
-
-For example, an API service might measure the number of requests consumed by a customer.
-
-The configuration may define:
-- The usage metric.
-- The measurement unit.
-- The meaning of each usage quantity.
-- The relationship between usage data and the product.
-
-### Step 4: Configure the Usage Resource
-I learned how usage resource configuration represents or identifies the resource associated with usage measurement in the supported Revenue Cloud data model.
-
-For example, the resource might represent API request consumption or data transfer.
-
-I reviewed the relevant resource configuration and verified that it aligned with the intended usage measurement.
-
-### Step 5: Associate the Usage Configuration with the Product
-I learned how the applicable usage configuration is associated with the product using the relationships supported by the org.
-
-I verified that:
-- The correct usage definition was selected.
-- The correct usage resource was associated.
-- The product referenced the intended usage configuration.
-- The required fields and relationships were populated.
-
-Some Revenue Cloud configurations use records such as Product Usage Resource to associate a product with a usage resource.
-
-### Step 6: Configure Usage Pricing
-I learned how the usage rate or pricing method determines the charge calculated from recorded consumption.
-
-For example:
-
-| Configuration | Value |
-|---|---:|
-| Usage metric | API requests |
-| Billing unit | 1,000 requests |
-| Price per unit | ₹2 |
-| Total consumption | 50,000 requests |
-| Calculated usage charge | ₹100 |
-
-The pricing configuration determines how the measured consumption is converted into a billable amount.
-
-### Step 7: Configure Commitments or Grants, if Required
-I learned that some usage-based offerings include a commitment, allowance, or grant rather than charging for every unit from the beginning.
-
-Depending on the supported model, the customer may receive a predefined allowance or commit to a specific quantity or monetary value.
-
-I reviewed the applicable configuration and verified how usage is measured against the allowance or commitment.
-
-### Step 8: Validate the Product Configuration
-I learned how to validate the completed configuration before using the product in a commercial transaction.
-
-I checked:
-- Product activation and availability.
-- Usage definition and resource associations.
-- Unit of measure.
-- Pricing configuration.
-- Commitment or grant settings, where applicable.
-- Required catalog or selling-model configuration.
-
-### Step 9: Test Usage Processing and Billing
-I learned how to validate the usage-based process using sample consumption data.
-
-A typical test includes:
-1. Make the usage-based product available for sale.
-2. Complete the applicable commercial and order process.
-3. Record or ingest sample usage data through the supported mechanism.
-4. Validate the usage quantity and associated customer or product.
-5. Run the configured usage-rating or billing process.
-6. Review the calculated charges.
-7. Verify the resulting billing records or invoice output.
-
-The exact processing sequence depends on the Revenue Cloud implementation and any integrated usage or rating services.
-
----
-
-## 4. Usage-Based Product Models I Reviewed
-
-I also learned about different usage-based commercial models and how they can support different customer charging arrangements.
-
-| Model | General Purpose | Example |
+| Product | Purpose | Configuration |
 |---|---|---|
-| Pay-as-you-go | Charge for actual consumption | Pay for each API request unit |
-| Pack-based | Sell predefined usage packs | Purchase a pack of 10,000 requests |
-| Quantity commitment | Commit to a specified usage quantity | Commit to 100,000 requests |
-| Monetary commitment | Commit to a specified monetary amount | Commit to ₹50,000 of usage |
-| Token commitment | Commit to a defined token balance where supported | Purchase a balance of service tokens |
+| Laptop | Main product | Required parent product |
+| Mouse | Accessory | Optional product |
+| Warranty | Protection service | Mandatory product |
 
-The exact model names and configuration options depend on the Revenue Cloud functionality enabled in the org.
+I verified the product details, active status, and required selling and pricing configuration.
+
+### Step 2: Create the Laptop Bundle
+
+I created the laptop bundle and configured the laptop as the main commercial product.
+
+I then added the mouse and warranty as product components or options using the supported Revenue Cloud product configuration features.
+
+### Step 3: Configure the Warranty as Mandatory
+
+I configured the warranty as a required component of the laptop bundle.
+
+The expected behavior is:
+- The warranty is automatically included or required during configuration.
+- The customer cannot remove the warranty while keeping the laptop bundle valid.
+- The configuration is validated before the product can proceed through the sales process.
+
+### Step 4: Configure the Mouse as Optional
+
+I configured the mouse as an optional component.
+
+The expected behavior is:
+- The customer can select the mouse.
+- The customer can leave the mouse unselected.
+- The laptop bundle remains valid even when the mouse is not selected.
+
+### Step 5: Test the Bundle Configuration
+
+I tested the following scenarios to confirm that the configuration behaves as required.
+
+| Test Scenario | Expected Result |
+|---|---|
+| Select the laptop bundle | Laptop is included |
+| Configure the bundle without the mouse | Configuration is valid |
+| Configure the bundle with the mouse | Configuration is valid |
+| Attempt to remove the mandatory warranty | Removal is prevented or configuration is invalid |
+| Select the laptop with the warranty and mouse | All selected products are included |
+
+### Implementation Summary
+
+I implemented the bundle using the product configuration capabilities available in Revenue Cloud. I verified that the warranty is mandatory and the mouse is optional, ensuring that the configuration follows the business requirement.
+
+**Learning outcome:** I learned how to configure a commercial product bundle with a required component and an optional component, and how to validate the behavior through positive and negative test scenarios.
+
+---
+
+## 3. Scenario 2: Conditional Discount Based on Account Type
+
+### Business Requirement
+
+A company sells a product for ₹10,000. Eligible customers receive a 10% discount, but customers whose Account Type is Government must not receive this discount.
+
+### Objective
+
+I implemented conditional pricing logic so that the discount is applied only when the customer qualifies and the Account Type is not Government.
+
+### Pricing Requirements
+
+| Condition | Discount | Final Price |
+|---|---:|---:|
+| Eligible customer with a non-Government Account Type | 10% | ₹9,000 |
+| Customer with Account Type = Government | 0% | ₹10,000 |
+| Customer who does not qualify for the discount | 0% | ₹10,000 |
+
+The calculation assumes the ₹10,000 list price and excludes taxes and other adjustments.
+
+## 4. Step 1: Configure the Product and List Price
+
+I configured the product and its list price so that the pricing process has a base amount from which the discount can be calculated.
+
+**Configuration:**
+- Product: Laptop or the selected example product.
+- List Price: ₹10,000.
+- Discount Rate: 10%.
+- Discount Amount for eligible customers: ₹1,000.
+- Final Price for eligible customers: ₹9,000.
+
+The list price provides the base price used by the pricing procedure.
+
+## 5. Step 2: Create the Required Custom Object and Fields
+
+I created the required custom object and custom fields to store or support the pricing configuration used in the scenario.
+
+The fields were designed to support the required business inputs, such as the applicable discount percentage, eligibility criteria, and customer Account Type.
+
+The exact object and field API names depend on the implementation in my org.
+
+**Configuration considerations:**
+- Store the relevant discount percentage or pricing input.
+- Identify the Account Type used by the business rule.
+- Ensure that the pricing process can access the required customer and product information.
+- Verify that the fields are populated and available to the pricing logic.
+
+## 6. Step 3: Create the Decision Table
+
+I created a decision table to evaluate the discount eligibility conditions.
+
+The decision table evaluates the customer Account Type and the discount eligibility criteria to determine whether the 10% discount should apply.
+
+### Decision Table Logic
+
+| Account Type | Customer Eligible? | Discount Result |
+|---|---|---:|
+| Government | Yes | 0% |
+| Government | No | 0% |
+| Non-Government | Yes | 10% |
+| Non-Government | No | 0% |
+
+The Government exclusion takes priority over the general discount eligibility condition.
+
+I configured the decision table inputs and outputs so the pricing process can retrieve the applicable discount result.
+
+**Expected output:**
+- Government Account Type → 0% discount.
+- Eligible non-Government customer → 10% discount.
+- Other non-qualifying customer → 0% discount.
+
+## 7. Step 4: Configure the Pricing Procedure
+
+I configured the pricing procedure to calculate the final product price using the list price and the discount result.
+
+The pricing procedure uses the required pricing elements and the output of the decision table to determine the final price.
+
+### Pricing Procedure Flow
+
+1. Retrieve the product list price.
+2. Retrieve the relevant customer Account Type.
+3. Evaluate the discount eligibility through the decision table.
+4. Return the applicable discount percentage.
+5. Calculate the discount amount.
+6. Subtract the discount from the list price.
+7. Return the final calculated price.
+
+The procedure must be configured so the Government exclusion is evaluated before the discount is applied.
+
+## 8. Step 5: Configure Pricing Inputs and Values
+
+I configured the pricing inputs and values required for the calculation, including the list price and the discount percentage.
+
+The configured values provide the information required by the decision table and pricing procedure.
+
+### Example Calculation
+
+For an eligible non-Government customer:
+
+- List Price = ₹10,000
+- Discount Rate = 10%
+- Discount Amount = ₹10,000 × 10% = ₹1,000
+- Final Price = ₹10,000 − ₹1,000 = ₹9,000
+
+For a Government customer:
+
+- List Price = ₹10,000
+- Discount Rate = 0%
+- Discount Amount = ₹0
+- Final Price = ₹10,000
+
+## 9. Step 6: Test the Pricing Implementation
+
+I tested the pricing logic with different customer Account Types to verify that the discount was applied correctly.
+
+| Test Case | Account Type | Expected Discount | Expected Final Price |
+|---|---|---:|---:|
+| 1 | Government | 0% | ₹10,000 |
+| 2 | Commercial | 10% | ₹9,000 |
+| 3 | Individual | 10%, if eligible | ₹9,000 |
+| 4 | Non-Government customer not eligible for the offer | 0% | ₹10,000 |
+
+The expected results depend on the eligibility conditions configured in the decision table.
+
+I verified that the Government exclusion was respected and that the final price was calculated correctly for eligible and non-eligible customers.
 
