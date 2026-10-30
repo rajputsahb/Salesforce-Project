@@ -1,209 +1,365 @@
-# Salesforce Revenue Cloud – Product Bundling and Conditional Discounting
+# Salesforce Revenue Cloud – Scenario-Based Pricing, Billing, and Invoice Management
 
 ## 1. Project Overview
 
-I worked on two business scenarios in Salesforce Revenue Cloud to understand product configuration and pricing implementation.
+In this learning activity, I worked on four practical, scenario-based business requirements in Salesforce Revenue Cloud. The objective was to understand how to configure pricing, troubleshoot billing issues, correct invoice discrepancies, and modify billing frequencies.
 
-- **Scenario 1 – Laptop Bundle Configuration:** Configure a laptop bundle containing a laptop, mouse, and warranty, where the warranty is mandatory and the mouse is optional.
-- **Scenario 2 – Conditional Discounting:** Configure a 10% discount on a product priced at ₹10,000, but prevent the discount from applying to customers whose Account Type is Government.
+The four scenarios covered:
 
-For these scenarios, I worked with product configuration, custom objects and fields, decision tables, pricing procedures, list prices, and pricing-related configuration values.
-
-## 2. Scenario 1: Laptop Bundle with Mandatory Warranty and Optional Mouse
-
-### Business Requirement
-
-A customer wants to purchase a laptop bundle containing three products:
-
-- Laptop – Main product.
-- Mouse – Optional accessory.
-- Warranty – Mandatory service.
-
-The customer must purchase the warranty with the laptop, but the mouse should be optional.
-
-### Objective
-
-I implemented the bundle configuration so that the warranty is required whenever the laptop bundle is purchased, while the customer can choose whether to include the mouse.
-
-### Step 1: Create the Products
-
-I learned how to create and configure the individual products that make up the bundle.
-
-| Product | Purpose | Configuration |
-|---|---|---|
-| Laptop | Main product | Required parent product |
-| Mouse | Accessory | Optional product |
-| Warranty | Protection service | Mandatory product |
-
-I verified the product details, active status, and required selling and pricing configuration.
-
-### Step 2: Create the Laptop Bundle
-
-I created the laptop bundle and configured the laptop as the main commercial product.
-
-I then added the mouse and warranty as product components or options using the supported Revenue Cloud product configuration features.
-
-### Step 3: Configure the Warranty as Mandatory
-
-I configured the warranty as a required component of the laptop bundle.
-
-The expected behavior is:
-- The warranty is automatically included or required during configuration.
-- The customer cannot remove the warranty while keeping the laptop bundle valid.
-- The configuration is validated before the product can proceed through the sales process.
-
-### Step 4: Configure the Mouse as Optional
-
-I configured the mouse as an optional component.
-
-The expected behavior is:
-- The customer can select the mouse.
-- The customer can leave the mouse unselected.
-- The laptop bundle remains valid even when the mouse is not selected.
-
-### Step 5: Test the Bundle Configuration
-
-I tested the following scenarios to confirm that the configuration behaves as required.
-
-| Test Scenario | Expected Result |
-|---|---|
-| Select the laptop bundle | Laptop is included |
-| Configure the bundle without the mouse | Configuration is valid |
-| Configure the bundle with the mouse | Configuration is valid |
-| Attempt to remove the mandatory warranty | Removal is prevented or configuration is invalid |
-| Select the laptop with the warranty and mouse | All selected products are included |
-
-### Implementation Summary
-
-I implemented the bundle using the product configuration capabilities available in Revenue Cloud. I verified that the warranty is mandatory and the mouse is optional, ensuring that the configuration follows the business requirement.
-
-**Learning outcome:** I learned how to configure a commercial product bundle with a required component and an optional component, and how to validate the behavior through positive and negative test scenarios.
+1. Tiered Pricing – Different prices for different quantity ranges.
+2. Invoice Generation Troubleshooting – Investigating why an invoice is not generated after order activation.
+3. Invoice Correction – Correcting an overcharged invoice using a Credit Memo.
+4. Billing Frequency Change – Changing annual billing to monthly billing.
 
 ---
 
-## 3. Scenario 2: Conditional Discount Based on Account Type
+## 2. Scenario 1: Tiered Pricing Based on Product Quantity
 
 ### Business Requirement
 
-A company sells a product for ₹10,000. Eligible customers receive a 10% discount, but customers whose Account Type is Government must not receive this discount.
+A customer wants to purchase 100 units of a product.
+
+- First 50 units cost ₹100 each.
+- Next 50 units cost ₹80 each.
+- The pricing should automatically calculate the total based on the quantity purchased.
 
 ### Objective
 
-I implemented conditional pricing logic so that the discount is applied only when the customer qualifies and the Account Type is not Government.
+I worked on implementing tiered pricing in Revenue Cloud so that different unit prices are applied to different quantity ranges.
 
-### Pricing Requirements
+### Step 1: Understand the Pricing Requirement
 
-| Condition | Discount | Final Price |
+I first analyzed the quantity ranges and their corresponding prices.
+
+| Quantity Range | Unit Price |
+|---|---:|
+| First 50 units | ₹100 |
+| Next 50 units | ₹80 |
+
+### Step 2: Configure the Product and List Price
+
+I configured the product and its base pricing information.
+
+- Created or selected the required product.
+- Configured the product's pricing details.
+- Verified that the product was available for the required selling process.
+- Prepared the pricing configuration for quantity-based calculation.
+
+### Step 3: Configure Tiered Pricing
+
+I configured the quantity-based pricing logic using the supported pricing configuration in Revenue Cloud.
+
+The pricing logic needs to evaluate the ordered quantity and apply the corresponding price to each quantity range.
+
+For this scenario, the calculation is:
+
+- First 50 units × ₹100 = ₹5,000.
+- Next 50 units × ₹80 = ₹4,000.
+- Total price = ₹9,000.
+
+### Step 4: Validate the Pricing Calculation
+
+| Quantity | Applied Unit Price | Total |
 |---|---:|---:|
-| Eligible customer with a non-Government Account Type | 10% | ₹9,000 |
-| Customer with Account Type = Government | 0% | ₹10,000 |
-| Customer who does not qualify for the discount | 0% | ₹10,000 |
+| 50 units | ₹100 | ₹5,000 |
+| 50 units | ₹80 | ₹4,000 |
+| **100 units** | | **₹9,000** |
 
-The calculation assumes the ₹10,000 list price and excludes taxes and other adjustments.
+### Additional Test Scenarios
 
-## 4. Step 1: Configure the Product and List Price
+| Test Scenario | Expected Result |
+|---|---|
+| Purchase 25 units | 25 × ₹100 = ₹2,500 |
+| Purchase 50 units | 50 × ₹100 = ₹5,000 |
+| Purchase 75 units | ₹5,000 + ₹2,000 = ₹7,000 |
+| Purchase 100 units | ₹5,000 + ₹4,000 = ₹9,000 |
 
-I configured the product and its list price so that the pricing process has a base amount from which the discount can be calculated.
+**Important:** This scenario uses graduated or slab pricing, where each price applies only to the units within its respective quantity range. It is different from volume pricing where the entire quantity may receive the price of the applicable tier.
 
-**Configuration:**
-- Product: Laptop or the selected example product.
-- List Price: ₹10,000.
-- Discount Rate: 10%.
-- Discount Amount for eligible customers: ₹1,000.
-- Final Price for eligible customers: ₹9,000.
+### Learning Outcome
 
-The list price provides the base price used by the pricing procedure.
+I learned how to implement tiered pricing in Revenue Cloud and calculate the total price by applying different unit prices to different quantity ranges.
 
-## 5. Step 2: Create the Required Custom Object and Fields
+---
 
-I created the required custom object and custom fields to store or support the pricing configuration used in the scenario.
+## 3. Scenario 2: Order Activated but Invoice Not Generated
 
-The fields were designed to support the required business inputs, such as the applicable discount percentage, eligibility criteria, and customer Account Type.
+### Business Requirement
 
-The exact object and field API names depend on the implementation in my org.
+A customer purchases an annual subscription for ₹1,20,000. The order is activated, but the invoice is not generated.
 
-**Configuration considerations:**
-- Store the relevant discount percentage or pricing input.
-- Identify the Account Type used by the business rule.
-- Ensure that the pricing process can access the required customer and product information.
-- Verify that the fields are populated and available to the pricing logic.
+The business wants to identify the reason and resolve the billing issue.
 
-## 6. Step 3: Create the Decision Table
+### Objective
 
-I created a decision table to evaluate the discount eligibility conditions.
+I worked on understanding the end-to-end billing process and troubleshooting the reasons why an activated order might not generate an invoice.
 
-The decision table evaluates the customer Account Type and the discount eligibility criteria to determine whether the 10% discount should apply.
+### Step 1: Verify the Order Status
 
-### Decision Table Logic
+I first checked whether the order was successfully activated.
 
-| Account Type | Customer Eligible? | Discount Result |
-|---|---|---:|
-| Government | Yes | 0% |
-| Government | No | 0% |
-| Non-Government | Yes | 10% |
-| Non-Government | No | 0% |
+I reviewed:
+- Order status.
+- Order activation date.
+- Order products.
+- Product quantities.
+- Order item status.
+- Billing-related configuration.
 
-The Government exclusion takes priority over the general discount eligibility condition.
+An activated order does not always mean that an invoice has already been generated. The relevant billing process must also be completed.
 
-I configured the decision table inputs and outputs so the pricing process can retrieve the applicable discount result.
+### Step 2: Verify the Billing Configuration
 
-**Expected output:**
-- Government Account Type → 0% discount.
-- Eligible non-Government customer → 10% discount.
-- Other non-qualifying customer → 0% discount.
+I checked whether the product and order item had the required billing configuration.
 
-## 7. Step 4: Configure the Pricing Procedure
+I reviewed:
+- Billing policy.
+- Billing treatment.
+- Billing frequency.
+- Billing type.
+- Billing commencement date.
+- Billing schedule configuration.
 
-I configured the pricing procedure to calculate the final product price using the list price and the discount result.
+If the billing configuration is missing or incorrect, invoice generation may not proceed as expected.
 
-The pricing procedure uses the required pricing elements and the output of the decision table to determine the final price.
+### Step 3: Verify the Billing Schedule
 
-### Pricing Procedure Flow
+I checked whether a billing schedule or the applicable billing schedule records had been created.
 
-1. Retrieve the product list price.
-2. Retrieve the relevant customer Account Type.
-3. Evaluate the discount eligibility through the decision table.
-4. Return the applicable discount percentage.
-5. Calculate the discount amount.
-6. Subtract the discount from the list price.
-7. Return the final calculated price.
+I verified:
+- Whether the billing schedule exists.
+- Whether the billing date has arrived.
+- Whether the scheduled amount is correct.
+- Whether the billing schedule is eligible for processing.
+- Whether the schedule has already been processed.
 
-The procedure must be configured so the Government exclusion is evaluated before the discount is applied.
+### Step 4: Check Billing Batch Processing
 
-## 8. Step 5: Configure Pricing Inputs and Values
+I investigated whether the billing batch or scheduled billing process had run successfully.
 
-I configured the pricing inputs and values required for the calculation, including the list price and the discount percentage.
+I checked:
+- Whether the billing job was executed.
+- Whether the relevant billing records were selected.
+- Whether any records failed during processing.
+- Whether error messages were available.
+- Whether the billing batch completed successfully.
 
-The configured values provide the information required by the decision table and pricing procedure.
+### Step 5: Check Invoice Generation Conditions
 
-### Example Calculation
+I verified whether the billing records satisfied the conditions required for invoice generation.
 
-For an eligible non-Government customer:
+Possible reasons include:
 
-- List Price = ₹10,000
-- Discount Rate = 10%
-- Discount Amount = ₹10,000 × 10% = ₹1,000
-- Final Price = ₹10,000 − ₹1,000 = ₹9,000
+- Billing commencement date has not arrived.
+- Billing schedule has not been generated.
+- Billing schedule is not eligible for processing.
+- Required billing configuration is missing.
+- Billing batch processing failed.
+- Invoice generation encountered a validation or processing error.
 
-For a Government customer:
+### Step 6: Resolve and Validate the Issue
 
-- List Price = ₹10,000
-- Discount Rate = 0%
-- Discount Amount = ₹0
-- Final Price = ₹10,000
+After identifying the root cause, I corrected the relevant configuration or processing issue.
 
-## 9. Step 6: Test the Pricing Implementation
+I then:
+1. Revalidated the billing configuration.
+2. Confirmed that the billing schedule was eligible.
+3. Reprocessed the billing records using the supported billing process.
+4. Verified that the invoice was generated.
+5. Checked the invoice amount and customer details.
 
-I tested the pricing logic with different customer Account Types to verify that the discount was applied correctly.
+### Example
 
-| Test Case | Account Type | Expected Discount | Expected Final Price |
-|---|---|---:|---:|
-| 1 | Government | 0% | ₹10,000 |
-| 2 | Commercial | 10% | ₹9,000 |
-| 3 | Individual | 10%, if eligible | ₹9,000 |
-| 4 | Non-Government customer not eligible for the offer | 0% | ₹10,000 |
+| Description | Value |
+|---|---:|
+| Subscription Amount | ₹1,20,000 |
+| Subscription Term | 12 Months |
+| Billing Frequency | Annual |
+| Expected Annual Invoice | ₹1,20,000 |
 
-The expected results depend on the eligibility conditions configured in the decision table.
+### Learning Outcome
 
-I verified that the Government exclusion was respected and that the final price was calculated correctly for eligible and non-eligible customers.
+I learned how to troubleshoot invoice-generation issues by checking order activation, billing configuration, billing schedules, billing batch processing, and invoice-generation conditions.
+
+---
+
+## 4. Scenario 3: Correcting an Overcharged Invoice Using a Credit Memo
+
+### Business Requirement
+
+An invoice for ₹50,000 has already been generated. Later, the business discovers that ₹5,000 was overcharged.
+
+The business needs to correct the invoice and reduce the customer's outstanding balance.
+
+### Objective
+
+I worked on understanding how to correct an already-generated invoice using a Credit Memo rather than directly changing the original invoice amount.
+
+### Step 1: Identify the Invoice
+
+I located the invoice that contained the incorrect charge.
+
+I reviewed:
+- Invoice number.
+- Customer details.
+- Invoice date.
+- Invoice line items.
+- Original invoice amount.
+- Current payment status.
+
+### Step 2: Identify the Overcharged Amount
+
+I verified the incorrect amount and calculated the required adjustment.
+
+| Description | Amount |
+|---|---:|
+| Original Invoice | ₹50,000 |
+| Incorrectly Charged Amount | ₹5,000 |
+| Correct Amount | ₹45,000 |
+
+### Step 3: Create a Credit Memo
+
+I initiated the Credit Memo creation process using the supported invoice or billing workflow.
+
+I selected the relevant invoice and entered the credit information.
+
+Typical details include:
+- Reference invoice.
+- Customer or billing account.
+- Credit Memo date.
+- Credit reason.
+- Invoice line being adjusted.
+- Credit amount.
+
+### Step 4: Add the Credit Amount
+
+I entered ₹5,000 as the credit amount for the identified overcharge.
+
+I verified that the credit was associated with the correct invoice and billing line.
+
+### Step 5: Validate and Complete the Credit Memo
+
+I reviewed the Credit Memo details and completed the applicable submission, approval, or posting process.
+
+I checked:
+- Credit Memo amount.
+- Reference invoice.
+- Credit reason.
+- Credit Memo status.
+- Whether the credit was applied to the intended invoice.
+
+### Step 6: Verify the Updated Balance
+
+After applying the credit, I verified the updated invoice balance.
+
+| Description | Amount |
+|---|---:|
+| Original Invoice | ₹50,000 |
+| Credit Memo | ₹5,000 |
+| Adjusted Amount Due | ₹45,000 |
+
+This calculation assumes that the invoice has not already been paid and that the credit is applied directly against the invoice.
+
+If the invoice has already been paid, the credit may instead result in a customer credit balance or refund, depending on the configured financial process.
+
+### Learning Outcome
+
+I learned how to correct an overcharged invoice using a Credit Memo, maintain the original invoice history, and validate the adjusted customer balance.
+
+---
+
+## 5. Scenario 4: Changing Annual Billing to Monthly Billing
+
+### Business Requirement
+
+A customer is currently billed annually, but the business wants to change the billing frequency to monthly.
+
+The objective is to change the billing arrangement while maintaining the correct subscription amount and billing periods.
+
+### Objective
+
+I worked on understanding how billing frequency can be changed in Revenue Cloud by reviewing the existing subscription, billing schedule, and applicable billing configuration.
+
+### Step 1: Identify the Existing Subscription
+
+I located the customer's existing subscription or eligible commercial record.
+
+I reviewed:
+- Product details.
+- Subscription start date.
+- Subscription end date.
+- Annual subscription amount.
+- Existing billing frequency.
+- Existing billing schedule.
+
+### Step 2: Review the Existing Billing Configuration
+
+I checked the billing policy and relevant billing configuration to identify where the annual billing frequency was defined.
+
+I reviewed:
+- Billing frequency.
+- Billing period.
+- Billing commencement date.
+- Billing schedule.
+- Existing invoice and payment status.
+
+### Step 3: Determine the Monthly Billing Amount
+
+I calculated the monthly amount based on the annual subscription value.
+
+Example:
+
+- Annual Subscription Amount = ₹1,20,000.
+- Billing Frequency = Monthly.
+- Number of Months = 12.
+- Monthly Amount = ₹10,000.
+
+Calculation:
+
+₹1,20,000 ÷ 12 = ₹10,000 per month.
+
+### Step 4: Implement the Billing Frequency Change
+
+I reviewed the supported process for changing the billing arrangement.
+
+Depending on the existing subscription and Revenue Cloud configuration, the change may require an amendment, a supported billing schedule update, or a new commercial arrangement.
+
+The implementation includes:
+
+1. Identify the subscription eligible for the change.
+2. Review the existing billing policy and billing frequency.
+3. Apply the appropriate commercial change process.
+4. Configure monthly billing for the eligible future billing periods.
+5. Review the effective date of the change.
+6. Regenerate or update the applicable billing schedules through the supported process.
+7. Verify that the annual amount is correctly allocated across the monthly periods.
+
+I also checked whether previously generated invoices need to remain unchanged and ensured that the change applies to the intended future billing periods.
+
+### Step 5: Validate Monthly Billing
+
+I verified that the new billing schedule generated the expected monthly amounts.
+
+| Billing Period | Expected Amount |
+|---|---:|
+| Month 1 | ₹10,000 |
+| Month 2 | ₹10,000 |
+| Month 3 | ₹10,000 |
+| Month 4–12 | ₹90,000 |
+| **Annual Total** | **₹1,20,000** |
+
+### Step 6: Test the Billing Process
+
+I tested the following scenarios:
+
+| Test Scenario | Expected Result |
+|---|---|
+| Existing annual billing arrangement | Existing billing records remain accurate |
+| Change to monthly billing | Future billing periods are monthly |
+| First monthly billing run | ₹10,000 is billed |
+| Subsequent monthly billing runs | ₹10,000 is billed per period |
+| Verify annual total | ₹1,20,000, excluding taxes and adjustments |
+
+
+---
 
