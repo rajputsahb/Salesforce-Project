@@ -1,365 +1,328 @@
-# Salesforce Revenue Cloud – Scenario-Based Pricing, Billing, and Invoice Management
+# Salesforce SOQL Interview Practice and Revenue Cloud – Usage-Based Pricing
 
-## 1. Project Overview
+## 1. Practicing Interview-Related SOQL Queries
 
-In this learning activity, I worked on four practical, scenario-based business requirements in Salesforce Revenue Cloud. The objective was to understand how to configure pricing, troubleshoot billing issues, correct invoice discrepancies, and modify billing frequencies.
+I worked on practicing Salesforce SOQL queries that are commonly asked in experienced Salesforce Developer and CPQ/Revenue Cloud interviews.
 
-The four scenarios covered:
+The main objective was to improve my understanding of relationship queries, aggregate functions, filtering, subqueries, and complex data retrieval scenarios.
 
-1. Tiered Pricing – Different prices for different quantity ranges.
-2. Invoice Generation Troubleshooting – Investigating why an invoice is not generated after order activation.
-3. Invoice Correction – Correcting an overcharged invoice using a Credit Memo.
-4. Billing Frequency Change – Changing annual billing to monthly billing.
+### Key SOQL Concepts I Practiced
+
+- Parent-to-child relationship queries.
+- Child-to-parent relationship queries.
+- Aggregate functions such as COUNT(), SUM(), AVG(), MIN(), and MAX().
+- GROUP BY and HAVING clauses.
+- Semi-joins and anti-joins using IN and NOT IN.
+- AggregateResult handling in Apex.
+- Date-based filtering.
+- Complex queries involving Account, Contact, and Opportunity records.
+- SOQL limitations and scenarios where Apex is required.
+
+### Example 1: Accounts Having More Than 5 Contacts
+
+```sql
+SELECT AccountId, COUNT(Id)
+FROM Contact
+WHERE AccountId != NULL
+GROUP BY AccountId
+HAVING COUNT(Id) > 5
+```
+
+**Learning:** I learned how to use GROUP BY and HAVING to identify Account records that have more than five related Contacts.
+
+### Example 2: Accounts Having Opportunities but No Contacts
+
+```sql
+SELECT Id, Name
+FROM Account
+WHERE Id IN (
+    SELECT AccountId
+    FROM Opportunity
+    WHERE AccountId != NULL
+)
+AND Id NOT IN (
+    SELECT AccountId
+    FROM Contact
+    WHERE AccountId != NULL
+)
+```
+
+**Learning:** I learned how to use semi-join and anti-join queries to retrieve Accounts that have Opportunities but do not have Contacts.
+
+### Example 3: Total Opportunity Amount by Account
+
+```sql
+SELECT AccountId, SUM(Amount)
+FROM Opportunity
+WHERE AccountId != NULL
+GROUP BY AccountId
+```
+
+**Learning:** I learned how to use aggregate functions to calculate the total Opportunity Amount for each Account.
+
+### Example 4: Accounts Having Open Opportunities
+
+```sql
+SELECT Id, Name
+FROM Account
+WHERE Id IN (
+    SELECT AccountId
+    FROM Opportunity
+    WHERE IsClosed = false
+    AND AccountId != NULL
+)
+```
+
+**Learning:** I learned how to retrieve Accounts based on conditions applied to their related Opportunity records.
+
+### Example 5: Opportunities with Account and Contact Details
+
+```sql
+SELECT Id, Name, StageName, Amount,
+       Account.Name,
+       Account.Phone
+FROM Opportunity
+WHERE IsClosed = false
+```
+
+**Learning:** I learned how to retrieve parent Account information from Opportunity records using child-to-parent relationship queries.
+
+### Additional Learning: When to Use Apex Instead of SOQL
+
+I also learned that certain reporting requirements cannot be handled by a single SOQL query.
+
+For example, retrieving Accounts along with multiple child collections and applying aggregate conditions across different child relationships may require separate aggregate queries and Apex processing.
+
+In such scenarios, I can:
+- Execute separate SOQL queries.
+- Store the results in Maps and Sets.
+- Process the data in Apex.
+- Build the required output structure.
+- Return the result to an LWC or another calling component.
+
+This helped me understand the difference between SOQL data retrieval and Apex-based data processing.
 
 ---
 
-## 2. Scenario 1: Tiered Pricing Based on Product Quantity
+## 2. Learning About Usage-Based Products in Revenue Cloud
 
-### Business Requirement
+I explored Usage-Based Products in Salesforce Revenue Cloud and how businesses can charge customers based on their actual consumption of products or services.
 
-A customer wants to purchase 100 units of a product.
+Unlike traditional subscription products, usage-based products calculate charges according to measured consumption, such as API requests, transactions, storage, or data usage.
 
-- First 50 units cost ₹100 each.
-- Next 50 units cost ₹80 each.
-- The pricing should automatically calculate the total based on the quantity purchased.
+### Why We Use Usage-Based Products
 
-### Objective
-
-I worked on implementing tiered pricing in Revenue Cloud so that different unit prices are applied to different quantity ranges.
-
-### Step 1: Understand the Pricing Requirement
-
-I first analyzed the quantity ranges and their corresponding prices.
-
-| Quantity Range | Unit Price |
-|---|---:|
-| First 50 units | ₹100 |
-| Next 50 units | ₹80 |
-
-### Step 2: Configure the Product and List Price
-
-I configured the product and its base pricing information.
-
-- Created or selected the required product.
-- Configured the product's pricing details.
-- Verified that the product was available for the required selling process.
-- Prepared the pricing configuration for quantity-based calculation.
-
-### Step 3: Configure Tiered Pricing
-
-I configured the quantity-based pricing logic using the supported pricing configuration in Revenue Cloud.
-
-The pricing logic needs to evaluate the ordered quantity and apply the corresponding price to each quantity range.
-
-For this scenario, the calculation is:
-
-- First 50 units × ₹100 = ₹5,000.
-- Next 50 units × ₹80 = ₹4,000.
-- Total price = ₹9,000.
-
-### Step 4: Validate the Pricing Calculation
-
-| Quantity | Applied Unit Price | Total |
-|---|---:|---:|
-| 50 units | ₹100 | ₹5,000 |
-| 50 units | ₹80 | ₹4,000 |
-| **100 units** | | **₹9,000** |
-
-### Additional Test Scenarios
-
-| Test Scenario | Expected Result |
-|---|---|
-| Purchase 25 units | 25 × ₹100 = ₹2,500 |
-| Purchase 50 units | 50 × ₹100 = ₹5,000 |
-| Purchase 75 units | ₹5,000 + ₹2,000 = ₹7,000 |
-| Purchase 100 units | ₹5,000 + ₹4,000 = ₹9,000 |
-
-**Important:** This scenario uses graduated or slab pricing, where each price applies only to the units within its respective quantity range. It is different from volume pricing where the entire quantity may receive the price of the applicable tier.
-
-### Learning Outcome
-
-I learned how to implement tiered pricing in Revenue Cloud and calculate the total price by applying different unit prices to different quantity ranges.
-
----
-
-## 3. Scenario 2: Order Activated but Invoice Not Generated
-
-### Business Requirement
-
-A customer purchases an annual subscription for ₹1,20,000. The order is activated, but the invoice is not generated.
-
-The business wants to identify the reason and resolve the billing issue.
-
-### Objective
-
-I worked on understanding the end-to-end billing process and troubleshooting the reasons why an activated order might not generate an invoice.
-
-### Step 1: Verify the Order Status
-
-I first checked whether the order was successfully activated.
-
-I reviewed:
-- Order status.
-- Order activation date.
-- Order products.
-- Product quantities.
-- Order item status.
-- Billing-related configuration.
-
-An activated order does not always mean that an invoice has already been generated. The relevant billing process must also be completed.
-
-### Step 2: Verify the Billing Configuration
-
-I checked whether the product and order item had the required billing configuration.
-
-I reviewed:
-- Billing policy.
-- Billing treatment.
-- Billing frequency.
-- Billing type.
-- Billing commencement date.
-- Billing schedule configuration.
-
-If the billing configuration is missing or incorrect, invoice generation may not proceed as expected.
-
-### Step 3: Verify the Billing Schedule
-
-I checked whether a billing schedule or the applicable billing schedule records had been created.
-
-I verified:
-- Whether the billing schedule exists.
-- Whether the billing date has arrived.
-- Whether the scheduled amount is correct.
-- Whether the billing schedule is eligible for processing.
-- Whether the schedule has already been processed.
-
-### Step 4: Check Billing Batch Processing
-
-I investigated whether the billing batch or scheduled billing process had run successfully.
-
-I checked:
-- Whether the billing job was executed.
-- Whether the relevant billing records were selected.
-- Whether any records failed during processing.
-- Whether error messages were available.
-- Whether the billing batch completed successfully.
-
-### Step 5: Check Invoice Generation Conditions
-
-I verified whether the billing records satisfied the conditions required for invoice generation.
-
-Possible reasons include:
-
-- Billing commencement date has not arrived.
-- Billing schedule has not been generated.
-- Billing schedule is not eligible for processing.
-- Required billing configuration is missing.
-- Billing batch processing failed.
-- Invoice generation encountered a validation or processing error.
-
-### Step 6: Resolve and Validate the Issue
-
-After identifying the root cause, I corrected the relevant configuration or processing issue.
-
-I then:
-1. Revalidated the billing configuration.
-2. Confirmed that the billing schedule was eligible.
-3. Reprocessed the billing records using the supported billing process.
-4. Verified that the invoice was generated.
-5. Checked the invoice amount and customer details.
+- To charge customers according to actual consumption.
+- To support pay-as-you-go pricing models.
+- To configure predefined usage allowances or commitments.
+- To support different pricing models based on usage.
+- To calculate charges using usage records and configured pricing rules.
 
 ### Example
 
-| Description | Value |
-|---|---:|
-| Subscription Amount | ₹1,20,000 |
-| Subscription Term | 12 Months |
-| Billing Frequency | Annual |
-| Expected Annual Invoice | ₹1,20,000 |
+A company provides an API service and charges ₹2 for every 1,000 API requests.
 
-### Learning Outcome
+If a customer consumes 50,000 requests:
 
-I learned how to troubleshoot invoice-generation issues by checking order activation, billing configuration, billing schedules, billing batch processing, and invoice-generation conditions.
+- Total Usage = 50,000 requests.
+- Billing Unit = 1,000 requests.
+- Rate = ₹2 per unit.
+- Total Charge = ₹100.
 
 ---
 
-## 4. Scenario 3: Correcting an Overcharged Invoice Using a Credit Memo
+## 3. Usage-Based Product Rate Card Types
 
-### Business Requirement
+I learned about different Rate Card types used in Revenue Cloud to define how usage consumption is priced.
 
-An invoice for ₹50,000 has already been generated. Later, the business discovers that ₹5,000 was overcharged.
+A Rate Card helps represent the pricing configuration for a usage-based offering. The available rate card types and their behavior depend on the Revenue Cloud implementation.
 
-The business needs to correct the invoice and reduce the customer's outstanding balance.
+### Key Points I Learned
 
-### Objective
-
-I worked on understanding how to correct an already-generated invoice using a Credit Memo rather than directly changing the original invoice amount.
-
-### Step 1: Identify the Invoice
-
-I located the invoice that contained the incorrect charge.
-
-I reviewed:
-- Invoice number.
-- Customer details.
-- Invoice date.
-- Invoice line items.
-- Original invoice amount.
-- Current payment status.
-
-### Step 2: Identify the Overcharged Amount
-
-I verified the incorrect amount and calculated the required adjustment.
-
-| Description | Amount |
-|---|---:|
-| Original Invoice | ₹50,000 |
-| Incorrectly Charged Amount | ₹5,000 |
-| Correct Amount | ₹45,000 |
-
-### Step 3: Create a Credit Memo
-
-I initiated the Credit Memo creation process using the supported invoice or billing workflow.
-
-I selected the relevant invoice and entered the credit information.
-
-Typical details include:
-- Reference invoice.
-- Customer or billing account.
-- Credit Memo date.
-- Credit reason.
-- Invoice line being adjusted.
-- Credit amount.
-
-### Step 4: Add the Credit Amount
-
-I entered ₹5,000 as the credit amount for the identified overcharge.
-
-I verified that the credit was associated with the correct invoice and billing line.
-
-### Step 5: Validate and Complete the Credit Memo
-
-I reviewed the Credit Memo details and completed the applicable submission, approval, or posting process.
-
-I checked:
-- Credit Memo amount.
-- Reference invoice.
-- Credit reason.
-- Credit Memo status.
-- Whether the credit was applied to the intended invoice.
-
-### Step 6: Verify the Updated Balance
-
-After applying the credit, I verified the updated invoice balance.
-
-| Description | Amount |
-|---|---:|
-| Original Invoice | ₹50,000 |
-| Credit Memo | ₹5,000 |
-| Adjusted Amount Due | ₹45,000 |
-
-This calculation assumes that the invoice has not already been paid and that the credit is applied directly against the invoice.
-
-If the invoice has already been paid, the credit may instead result in a customer credit balance or refund, depending on the configured financial process.
+- Understand the purpose of Rate Cards in usage-based pricing.
+- Review the different rate card configurations available.
+- Understand how rate cards determine the applicable usage rates.
+- Identify the relationship between Rate Cards, Rate Card Entries, and usage-based products.
+- Understand how different pricing methods can support different consumption models.
 
 ### Learning Outcome
 
-I learned how to correct an overcharged invoice using a Credit Memo, maintain the original invoice history, and validate the adjusted customer balance.
+I understood how Rate Cards provide a structured way to define usage pricing and how the applicable rate configuration is used to calculate customer charges.
 
 ---
 
-## 5. Scenario 4: Changing Annual Billing to Monthly Billing
+## 4. Usage-Based Product
 
-### Business Requirement
+I learned how Usage-Based Products represent products or services where the customer is charged according to the amount consumed.
 
-A customer is currently billed annually, but the business wants to change the billing frequency to monthly.
+### Key Points I Learned
 
-The objective is to change the billing arrangement while maintaining the correct subscription amount and billing periods.
+- Create or configure a product for usage-based selling.
+- Understand the relationship between the product and its usage configuration.
+- Configure the applicable usage measurement.
+- Associate the required usage resource and usage definition.
+- Review the applicable pricing and billing configuration.
+- Validate usage-based charges through the billing process.
 
-### Objective
+### Example
 
-I worked on understanding how billing frequency can be changed in Revenue Cloud by reviewing the existing subscription, billing schedule, and applicable billing configuration.
+A customer purchases an API usage-based service.
 
-### Step 1: Identify the Existing Subscription
-
-I located the customer's existing subscription or eligible commercial record.
-
-I reviewed:
-- Product details.
-- Subscription start date.
-- Subscription end date.
-- Annual subscription amount.
-- Existing billing frequency.
-- Existing billing schedule.
-
-### Step 2: Review the Existing Billing Configuration
-
-I checked the billing policy and relevant billing configuration to identify where the annual billing frequency was defined.
-
-I reviewed:
-- Billing frequency.
-- Billing period.
-- Billing commencement date.
-- Billing schedule.
-- Existing invoice and payment status.
-
-### Step 3: Determine the Monthly Billing Amount
-
-I calculated the monthly amount based on the annual subscription value.
-
-Example:
-
-- Annual Subscription Amount = ₹1,20,000.
-- Billing Frequency = Monthly.
-- Number of Months = 12.
-- Monthly Amount = ₹10,000.
-
-Calculation:
-
-₹1,20,000 ÷ 12 = ₹10,000 per month.
-
-### Step 4: Implement the Billing Frequency Change
-
-I reviewed the supported process for changing the billing arrangement.
-
-Depending on the existing subscription and Revenue Cloud configuration, the change may require an amendment, a supported billing schedule update, or a new commercial arrangement.
-
-The implementation includes:
-
-1. Identify the subscription eligible for the change.
-2. Review the existing billing policy and billing frequency.
-3. Apply the appropriate commercial change process.
-4. Configure monthly billing for the eligible future billing periods.
-5. Review the effective date of the change.
-6. Regenerate or update the applicable billing schedules through the supported process.
-7. Verify that the annual amount is correctly allocated across the monthly periods.
-
-I also checked whether previously generated invoices need to remain unchanged and ensured that the change applies to the intended future billing periods.
-
-### Step 5: Validate Monthly Billing
-
-I verified that the new billing schedule generated the expected monthly amounts.
-
-| Billing Period | Expected Amount |
-|---|---:|
-| Month 1 | ₹10,000 |
-| Month 2 | ₹10,000 |
-| Month 3 | ₹10,000 |
-| Month 4–12 | ₹90,000 |
-| **Annual Total** | **₹1,20,000** |
-
-### Step 6: Test the Billing Process
-
-I tested the following scenarios:
-
-| Test Scenario | Expected Result |
+| Configuration | Value |
 |---|---|
-| Existing annual billing arrangement | Existing billing records remain accurate |
-| Change to monthly billing | Future billing periods are monthly |
-| First monthly billing run | ₹10,000 is billed |
-| Subsequent monthly billing runs | ₹10,000 is billed per period |
-| Verify annual total | ₹1,20,000, excluding taxes and adjustments |
+| Product | API Service |
+| Usage Metric | API Requests |
+| Billing Unit | 1,000 Requests |
+| Rate | ₹2 |
+| Total Usage | 50,000 Requests |
+| Calculated Charge | ₹100 |
 
+**Learning Outcome:** I learned how usage-based products support consumption-based business models and how their pricing depends on recorded usage.
 
 ---
+
+## 5. Rate Card
+
+I learned about the Rate Card and how it is used to organize and define pricing rates for usage-based products.
+
+A Rate Card represents a pricing structure that contains the applicable rates used to calculate charges based on customer consumption.
+
+### Key Points I Learned
+
+- Understand the purpose of a Rate Card.
+- Review the relationship between a Rate Card and its entries.
+- Understand how a Rate Card is associated with the relevant usage pricing configuration.
+- Review the applicable pricing units and rates.
+- Validate whether the correct Rate Card is used during pricing.
+
+### Example
+
+A Rate Card for an API service may contain different rates based on consumption levels.
+
+| Usage Range | Rate per 1,000 Requests |
+|---|---:|
+| 1–10,000 | ₹5 |
+| 10,001–50,000 | ₹3 |
+| Above 50,000 | ₹2 |
+
+The configured pricing behavior determines how these rates are applied to customer consumption.
+
+**Learning Outcome:** I understood how Rate Cards organize usage rates and support flexible usage-based pricing.
+
+---
+
+## 6. Rate Card Entry
+
+I learned about Rate Card Entries and how individual entries define the applicable pricing information within a Rate Card.
+
+A Rate Card Entry can represent a specific rate or pricing condition based on the configured usage range, unit, or other pricing criteria.
+
+### Key Points I Learned
+
+- Understand the relationship between a Rate Card and its Rate Card Entries.
+- Configure or review individual pricing entries.
+- Identify the applicable usage range and rate.
+- Understand how entries contribute to the overall pricing structure.
+- Validate the selected entry during usage pricing.
+
+### Example
+
+A Rate Card contains the following entries:
+
+| Rate Card Entry | Usage Range | Rate |
+|---|---|---:|
+| Entry 1 | 1–10,000 requests | ₹5 |
+| Entry 2 | 10,001–50,000 requests | ₹3 |
+| Entry 3 | Above 50,000 requests | ₹2 |
+
+**Learning Outcome:** I learned how Rate Card Entries define individual pricing conditions and how they support multiple rates within a single Rate Card.
+
+---
+
+## 7. Rate Adjustment by Tier
+
+I learned about Rate Adjustment by Tier and how pricing can be adjusted based on predefined usage levels or consumption ranges.
+
+Tier-based adjustments help businesses offer different rates depending on how much a customer consumes.
+
+### Key Points I Learned
+
+- Understand how usage tiers are defined.
+- Configure or review different pricing levels.
+- Understand how rates change when consumption reaches a particular tier.
+- Evaluate the impact of each tier on the final usage charge.
+- Validate the calculation against the configured pricing rules.
+
+### Example
+
+A company provides a cloud storage service with the following tier-based rates:
+
+| Usage Tier | Rate per GB |
+|---|---:|
+| First 100 GB | ₹10 |
+| Next 100 GB | ₹8 |
+| Above 200 GB | ₹6 |
+
+If a customer consumes 250 GB:
+
+- First 100 GB × ₹10 = ₹1,000.
+- Next 100 GB × ₹8 = ₹800.
+- Remaining 50 GB × ₹6 = ₹300.
+
+**Total Usage Charge = ₹2,100.**
+
+### Learning Outcome
+
+I understood how tier-based rate adjustments support different prices for different consumption ranges and how the final charge is calculated.
+
+---
+
+## 8. Rate Adjustment by Attribute
+
+I learned about Rate Adjustment by Attribute and how usage pricing can be adjusted according to specific product or usage attributes.
+
+Instead of applying pricing only according to consumption quantity, the system can use configured attributes to determine the applicable rate adjustment.
+
+### Key Points I Learned
+
+- Understand how pricing attributes influence usage charges.
+- Identify the attributes used for pricing decisions.
+- Review the relationship between attributes and rate adjustments.
+- Configure or review attribute-based pricing conditions.
+- Validate the final rate based on the selected attribute values.
+
+### Example
+
+A company provides cloud storage services with different service levels.
+
+| Service Level | Base Rate per GB |
+|---|---:|
+| Standard | ₹10 |
+| Premium | ₹15 |
+| Enterprise | ₹20 |
+
+If a customer selects the Premium service level and consumes 100 GB:
+
+- Selected Attribute = Premium.
+- Rate = ₹15 per GB.
+- Usage = 100 GB.
+- Total Charge = ₹1,500.
+
+The applicable rate is determined by the configured attribute-based pricing logic.
+
+### Learning Outcome
+
+I learned how Rate Adjustment by Attribute supports flexible pricing based on product characteristics or other configured usage attributes.
+
+---
+
+## 9. Comparison of Usage-Based Pricing Concepts
+
+| Concept | Purpose |
+|---|---|
+| Usage-Based Product | Product charged according to customer consumption |
+| Rate Card | Organizes the usage pricing configuration |
+| Rate Card Entry | Defines an individual rate or pricing condition |
+| Rate Adjustment by Tier | Adjusts pricing based on consumption ranges |
+| Rate Adjustment by Attribute | Adjusts pricing based on configured attribute values |
 
