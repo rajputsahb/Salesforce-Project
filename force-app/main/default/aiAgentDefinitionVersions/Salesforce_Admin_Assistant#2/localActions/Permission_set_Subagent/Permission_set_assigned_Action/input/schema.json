@@ -1,0 +1,21 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "varPermissionSetName" : {
+      "title" : "varPermissionSetName",
+      "description" : "The exact API name of the permission set that must be assigned.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "varUsername" : {
+      "title" : "varUsername",
+      "description" : "The exact Salesforce Username of the user who should receive the permission set.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
